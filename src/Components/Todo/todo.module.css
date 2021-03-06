@@ -1,0 +1,190 @@
+.textHolder {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap:wrap;
+    margin: 4rem 0;
+}
+.inputHolder {
+  display: flex;
+  justify-content: flex-end;
+  height: auto;
+  box-shadow: 2px 2px 20px rgb(255 255 255 / 10%);
+  padding: 10px;
+  margin:2rem;
+  height: 60px;
+  align-items: center;
+}
+.btnHolder{
+    display: flex;
+    justify-content: center;
+    height: auto;
+    box-shadow: 2px 2px 20px rgb(255 255 255 / 10%);
+    padding: 10px;
+    margin:2rem;
+    height: 60px;
+    align-items: center;
+}
+.inputItem{
+  width:250px;
+  height:32px;
+  padding: 10px;
+  border: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-right: 5px;
+  outline: none;
+  background: transparent;
+  box-shadow: -3px 0px 2px rgb(255 255 255 / 50%);
+  transition: all 1s ease-out;
+  padding-top: 8px;
+}
+.btnAdd{
+  box-shadow: 3px 0px 2px rgb(255 255 255 / 50%);
+  background: #305563;
+  border: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  outline: none;
+  color: rgb(99, 138, 185);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+  height: 32px;
+  
+}
+.btnDeleteAll{
+  box-shadow: -3px 0px 2px rgb(255 255 255 / 50%);
+  background: #305563;
+  border: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  outline: none;
+  color: rgb(99, 138, 185);
+  font-weight: 700;
+  font-size: 14px;
+  cursor:grabbing !important;
+  transition: all 0.3s ease-out;
+  height: 32px;
+}
+.btnCheckAll{
+    box-shadow: 3px 0px 2px rgb(255 255 255 / 50%);
+    background: #305563;
+    border: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    outline: none;
+    color: rgb(99, 138, 185);
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+    height: 32px;
+}
+.btnCheckAll:checked{
+  background: #305563;
+}
+.btnDeleteAll:disabled {
+  background: none;
+  cursor: no-drop;
+}
+
+.inputItem:hover{
+  width: 450px !important;
+  background:#305563;
+  color: aliceblue;
+  transition: width 2.5s;
+}
+.inputItem:disabled{
+  width:250px !important;
+  background: rgba(221, 221, 221, 0.452);
+}
+.btnAdd:disabled{
+  color:rgba(221, 221, 221, 0.562);
+  transition: all 0.3s ease-out;
+  background:none;
+  cursor: no-drop;
+}
+.disabledBtn{
+  background: none;
+  cursor: not-allowed;
+  box-shadow: 3px 0px 2px rgb(255 255 255 / 50%);
+  border: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  outline: none;
+  color: rgb(99, 138, 185);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: no-drop;
+  transition: all 0.3s ease-out;
+  height: 32px;
+}
+.d-flex {
+  display: flex;
+}
+.justify-content-around{
+  justify-content: space-around;
+}
+
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.row {
+  width:100%;
+}
+.col {
+  width:100%;
+}
+@media screen and (min-width: 1200px){
+  .container {
+    max-width: 1170px;
+  }
+  .col{
+    width:33.333% !important;
+  }
+}
+
+@media  screen and (min-width: 992px){
+  .container {
+    max-width: 960px;
+  }
+  .col{
+    width:33.333% !important;
+  }
+  .textHolder {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap:wrap;
+    margin: 4rem 0;
+  }
+  .inputHolder {
+    display: flex;
+    
+  }
+}
+@media screen and (max-width: 767px){
+  .container {
+    max-width: 720px;
+  }
+  
+  .textHolder {
+    display: block;
+
+  }
+  .inputHolder {
+    display:block;
+    height: auto;
+  }
+}
+
+@media (min-width: 320px){
+  .container {
+    max-width: 100%;
+  } 
+ 
+}

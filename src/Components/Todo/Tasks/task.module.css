@@ -31,8 +31,7 @@
 .check{
     position: absolute;
     top:5px;
-    left:5px;
-    
+    left:5px; 
 }
 .taskFlex{
     display: flex !important;
@@ -46,13 +45,15 @@
     background: none;
     border:none;
     box-shadow: 2px 5px 20px rgb(255 255 255 / 25%);
-    width: 50px;
+    width: 55px;
+    height:55px;
+    font-size: 22px;
     margin: 0.5rem;
     border-radius: 50%;
     text-align: center;
 }
 .taskFlex button:hover svg{
-  color:black
+  color:#305563
 }
 
 .taskFlex button:disabled  svg{
@@ -63,11 +64,8 @@
     font-size: 2rem;
     cursor: pointer;
     font-size: 25px;
-    color: rgb(27, 55, 88);
+    color: rgb(192, 195, 201);
     transition:all 0.3s ease;
-}
-.taskHolder svg:last-child{
-    margin-left: 3px;
 }
 .taskHolder input[type="checkbox"] {
     display: block;

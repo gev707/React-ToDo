@@ -5,7 +5,9 @@
   display: block;
   text-align: center;
 }
-
+.pos-relative{
+  position: relative;
+}
 button {
   outline: none;
 }
@@ -61,4 +63,10 @@ h1{
 }
 .product{
   padding-block-end: 1rem;
+}
+.filter{
+  filter: blur(0px);
+}
+.notFilter{
+  filter: blur(2px);
 }

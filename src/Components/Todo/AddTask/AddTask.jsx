@@ -1,5 +1,6 @@
 import React from "react";
 import styles from '../todo.module.css'
+import PropTypes from 'prop-types';
 
 class AddTask extends React.PureComponent {
     state = {
@@ -21,7 +22,7 @@ class AddTask extends React.PureComponent {
         if (event.key === 'Enter') this.handleSubmit()
     }
     render() {
-        const {isChecked} =this.props;
+        const {isAnyTasksChecked} =this.props;
         const{inputValue} = this.state;
         return (
             <div>
@@ -34,12 +35,12 @@ class AddTask extends React.PureComponent {
                             onChange={this.handleChangeInputValue}
                             onKeyPress={this.handleEnter}
                             value={this.state.inputValue}
-                            disabled={isChecked}
+                            disabled={isAnyTasksChecked}
                         />
                         <button
                             className={!!inputValue ? styles.btnAdd : styles.disabledBtn}
                             onClick={this.handleSubmit}
-                            disabled={isChecked}
+                            disabled={isAnyTasksChecked}
                         >
                             Add Text
                         </button>
@@ -49,4 +50,9 @@ class AddTask extends React.PureComponent {
         )
     }
 }
+AddTask.propTypes = {
+    handleSubmit: PropTypes.func.isRequired,
+    isAnyTasksChecked: PropTypes.bool.isRequired
+}
+
 export default AddTask

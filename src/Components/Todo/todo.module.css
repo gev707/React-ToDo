@@ -3,26 +3,31 @@
     justify-content: space-around;
     flex-wrap:wrap;
     margin: 4rem 0;
+    background: linear-gradient(#283048,#859398);
+
 }
 .inputHolder {
   display: flex;
   justify-content: flex-end;
   height: auto;
   box-shadow: 2px 2px 20px rgb(255 255 255 / 10%);
-  padding: 10px;
+  padding:10px 15px;
   margin:2rem;
   height: 60px;
   align-items: center;
+  border-radius: 15px;
+  filter: blur(0px) !important;
 }
 .btnHolder{
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     height: auto;
     box-shadow: 2px 2px 20px rgb(255 255 255 / 10%);
-    padding: 10px;
+    padding:10px 15px;
     margin:2rem;
     height: 60px;
     align-items: center;
+   border-radius: 15px;
 }
 .inputItem{
   width:250px;
@@ -63,9 +68,10 @@
   color: rgb(99, 138, 185);
   font-weight: 700;
   font-size: 14px;
-  cursor:grabbing !important;
+  cursor:pointer  !important;
   transition: all 0.3s ease-out;
   height: 32px;
+  width: 130px;
 }
 .btnCheckAll{
     box-shadow: 3px 0px 2px rgb(255 255 255 / 50%);
@@ -80,6 +86,7 @@
     cursor: pointer;
     transition: all 0.3s ease-out;
     height: 32px;
+    width: 130px;
 }
 .btnCheckAll:checked{
   background: #305563;

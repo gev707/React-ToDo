@@ -4,6 +4,7 @@
   height: 100%;
   display: block;
   text-align: center;
+  background: linear-gradient(#283048,#859398);
 }
 .pos-relative{
   position: relative;
@@ -63,10 +64,4 @@ h1{
 }
 .product{
   padding-block-end: 1rem;
-}
-.filter{
-  filter: blur(0px);
-}
-.notFilter{
-  filter: blur(2px);
 }

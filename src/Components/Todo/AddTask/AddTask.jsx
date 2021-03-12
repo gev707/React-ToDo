@@ -51,8 +51,8 @@ class AddTask extends React.PureComponent {
     }
 }
 AddTask.propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
-    isAnyTasksChecked: PropTypes.bool.isRequired
+    handleSubmit: PropTypes.func,
+    isAnyTasksChecked: PropTypes.bool
 }
 
 export default AddTask

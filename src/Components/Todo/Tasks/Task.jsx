@@ -50,10 +50,10 @@ Task.propTypes = {
         _id:PropTypes.string.isRequired,
         text:PropTypes.string,
     }),
-    handleToggleCheckTasks:PropTypes.func.isRequired,
-    deleteTask:PropTypes.func.isRequired,
+    handleToggleCheckTasks:PropTypes.func,
+    deleteTask:PropTypes.func,
     editTask:PropTypes.func,
-    isAnyTaskChecked:PropTypes.bool.isRequired,
+    isAnyTaskChecked:PropTypes.bool,
     isChecked:PropTypes.bool.isRequired
 
 }

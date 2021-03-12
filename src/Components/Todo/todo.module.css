@@ -3,8 +3,7 @@
     justify-content: space-around;
     flex-wrap:wrap;
     margin: 4rem 0;
-    background: linear-gradient(#283048,#859398);
-
+    
 }
 .inputHolder {
   display: flex;
@@ -177,15 +176,6 @@
 @media screen and (max-width: 767px){
   .container {
     max-width: 720px;
-  }
-  
-  .textHolder {
-    display: block;
-
-  }
-  .inputHolder {
-    display:block;
-    height: auto;
   }
 }
 

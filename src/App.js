@@ -1,8 +1,7 @@
 import './App.css';
 import React from 'react';
-//import ToDo from './Components/Todo/ToDo';
+import ToDo from './Components/Todo/ToDo';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import HOCContainer from './Components/Todo/HOC/HOC';
 
 class App extends React.Component {
   

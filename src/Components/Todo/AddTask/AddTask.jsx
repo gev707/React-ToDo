@@ -1,52 +1,82 @@
-import React from "react";
+import React, { PureComponent, createRef } from "react";
 import styles from '../todo.module.css'
 import PropTypes from 'prop-types';
 
-class AddTask extends React.PureComponent {
-    state = {
-        inputValue: ''
-    }
+class AddTask extends PureComponent {
+    constructor(props) {
+        super(props);
+        this.inputRef = createRef();
+        this.state = {
+            title: '',
+            description: ''
+        }
+    };
+
     handleChangeInputValue = (event) => {
-        const { value } = event.target
+        const { name, value } = event.target;
         this.setState({
-            inputValue: value
+            [name]: value
         })
     };
-    handleEnter = (event) => {
-        this.handleSubmit = () => {
-            this.props.addTask(this.state.inputValue);
-            this.setState({
-                inputValue: ''
-            })
-        };
-        if (event.key === 'Enter') this.handleSubmit()
-    }
+
+    handleSubmit = ({ key,type }) => {
+        const { title, description } = this.state;
+        if (!title || !description || (type === 'keypress' && key !== 'Enter')) return;
+        const formData = {
+            title,
+            description
+        }
+        this.props.addTask(formData)
+        this.setState({
+            title: '',
+            description: ''
+        })
+    };
+
+    componentDidMount() {
+        this.inputRef.current.focus();
+    };
+
     render() {
-        const {isAnyTasksChecked} =this.props;
-        const{inputValue} = this.state;
+
+        const { isAnyTasksChecked } = this.props;
+        const { title, description } = this.state;
+       
         return (
+
             <div>
                 <div className={styles.inputHolder}>
-                    <div>
-                        <input
-                            className={styles.inputItem}
-                            type="text"
-                            placeholder='Add some text'
-                            onChange={this.handleChangeInputValue}
-                            onKeyPress={this.handleEnter}
-                            value={this.state.inputValue}
-                            disabled={isAnyTasksChecked}
-                        />
-                        <button
-                            className={!!inputValue ? styles.btnAdd : styles.disabledBtn}
-                            onClick={this.handleSubmit}
-                            disabled={isAnyTasksChecked}
-                        >
-                            Add Text
+                    <input
+                        name='title'
+                        className={styles.inputItem}
+                        type="text"
+                        placeholder='Add some text'
+                        onChange={this.handleChangeInputValue}
+                        onKeyPress={this.handleSubmit}
+                        value={title}
+                        disabled={isAnyTasksChecked}
+                        ref={this.inputRef}
+                    />
+                    <button
+                        className={!!title ? styles.btnAdd : styles.disabledBtn}
+                        onClick={this.handleSubmit}
+                        disabled={isAnyTasksChecked || !title || !description}
+                    >
+                        Add Text
                         </button>
-                    </div>
+                </div>
+                <div>
+                    <textarea
+                        name='description'
+                        className={styles.textarea}
+                        onChange={this.handleChangeInputValue}
+                        placeholder='Description...'
+                        style={{ resize: 'none' }}
+                        value={description}>
+                    </textarea>
                 </div>
             </div>
+
         )
     }
 }

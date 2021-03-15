@@ -1,5 +1,4 @@
 import React from "react";
-import AddTask from "../Todo/AddTask/AddTask";
 import IdGenerator from "../Todo/helpers/IdGenerators";
 import Task from '../Todo/Tasks/Task';
 import Modal from '../Todo/Modal/Modal'
@@ -10,32 +9,33 @@ class Todo extends React.Component {
         tasks: [
             {
                 _id: IdGenerator(),
-                text: 'Card-1',
+                title: 'Card-1',
+                description: 'Card-1'
             },
             {
                 _id: IdGenerator(),
-                text: 'Card-2',
+                title: 'Card-2',
+                description: 'Card-2'
             },
             {
                 _id: IdGenerator(),
-                text: 'Card-3',
+                title: 'Card-3',
+                description: 'Card-3'
             },
         ],
         checkedTasks: new Set(),
+        isOpenModal:false
     };
-    addTask = (inputValue) => {
+    addTask = (formData) => {
         const task = [...this.state.tasks];
-        if (inputValue !== '') {
-            task.push({
-                text: inputValue,
-                _id: IdGenerator()
-            });
-            this.setState({
-                tasks: task,
-            });
-        } else {
-            alert('Write SomeThing')
-        }
+        task.push({
+            ...formData,
+            _id: IdGenerator()
+        });
+        this.setState({
+            tasks: task,
+        });
+
     }
     deleteTask = (id) => {
         let task = [...this.state.tasks];
@@ -44,13 +44,13 @@ class Todo extends React.Component {
             tasks: task
         })
     }
-    handleToggleCheckTasks = (id) => {
-        const checkedTasks = this.state.checkedTasks;
-        if (!checkedTasks.has(id)) checkedTasks.add(id);
-        else checkedTasks.clear(id);
+    handleToggleCheckTasks = (_id) => {
+        let checkedTasks = new Set(this.state.checkedTasks)
+        if (!checkedTasks.has(_id)) checkedTasks.add(_id);
+        else checkedTasks.delete(_id);
         this.setState({
             checkedTasks
-        })
+        });
     }
     deleteCheckedTasks = () => {
         let tasks = this.state.tasks;
@@ -62,24 +62,24 @@ class Todo extends React.Component {
         })
     }
     toggleCheckedAllTasks = () => {
-        let {tasks} = this.state;
+        let { tasks } = this.state;
         let checkedTasks = this.state.checkedTasks;
-        if(tasks.length === checkedTasks.size) checkedTasks.clear();
-        else tasks.forEach(task=> {
-                checkedTasks.add(task._id);
-            })
+        if (tasks.length === checkedTasks.size) checkedTasks.clear();
+        else tasks.forEach(task => {
+            checkedTasks.add(task._id);
+        })
         this.setState({
             checkedTasks
-        })    
+        })
     }
-    editTask =()=>{
-        const {isOpen} = this.state
+    toggleOpenModal = () => {
+        const { isOpenModal } = this.state
         this.setState({
-            isOpen:!isOpen
+            isOpenModal: !isOpenModal
         })
     }
     render() {
-        const { tasks, checkedTasks,isOpen } = this.state;
+        const { tasks, checkedTasks, isOpenModal} = this.state;
         const task = tasks.map(task => {
             return <Task
                 task={task}
@@ -88,43 +88,49 @@ class Todo extends React.Component {
                 handleToggleCheckTasks={this.handleToggleCheckTasks}
                 isAnyTaskChecked={checkedTasks.size}
                 isChecked={checkedTasks.has(task._id)}
-                editTask={this.editTask}
+                toggleOpenModal={this.toggleOpenModal}
             />
         });
         return (
-            <section className={!isOpen?'fliter':"notFilter"}>
-                <AddTask
-                    checkedTasks={checkedTasks}
-                    deleteCheckedTasks={this.deleteCheckedTasks}
-                    addTask={this.addTask}
-                    isAnyTaskChecked={!!checkedTasks.size}
-                />
-                <div className={styles.btnHolder}>
-                    <button
-                        onClick={this.deleteCheckedTasks}
-                        className={styles.btnDeleteAll}
-                        disabled={!checkedTasks.size}
-                    >
-                        Delete Checked
-                    </button>
-                    <button
-                        onClick={this.toggleCheckedAllTasks}
-                        className={styles.btnCheckAll}
-                    >
-                        {tasks.length === checkedTasks.size ? "Remove Checked": "Checked All"}
-                    </button>
-                </div>
-                <div className={styles.container}>
-                    <div className={styles.row}>
-                        <div className={styles.textHolder}>
-                            {task.length ? task : <h2>Add Some Task</h2>}
+            <section className='container'>
+                <div className={isOpenModal ? 'filter' : "noFilter"}>
+                    <h1>This is ToDo Component</h1>
+                    <div className={styles.inputHolder}>
+                        <button 
+                            className={styles.btnAddText} 
+                            onClick={this.toggleOpenModal}
+                            >Add Task Modal
+                        </button>
+                    </div>
+                    <div className={styles.btnHolder}>
+                        <button
+                            onClick={this.deleteCheckedTasks}
+                            className={styles.btnDeleteAll}
+                            disabled={!checkedTasks.size}
+                        >
+                            Delete Checked
+                        </button>
+                        <button
+                            onClick={this.toggleCheckedAllTasks}
+                            className={styles.btnCheckAll}
+                        >
+                            {tasks.length === checkedTasks.size ? "Remove Checked" : "Checked All"}
+                        </button>
+                    </div>
+                    <div className={styles.container}>
+                        <div className={styles.row}>
+                            <div className={styles.textHolder}>
+                                {task.length ? task : <h2>Add Some Task</h2>}
+                            </div>
                         </div>
                     </div>
                 </div>
-                <Modal 
-                    isOpen={isOpen}
-                    editTask={this.editTask}
-                />
+
+                {isOpenModal && <Modal 
+                    onHide={this.toggleOpenModal}
+                    checkedTasks={checkedTasks}
+                    addTask={this.addTask}
+                />}
             </section>
         )
     }

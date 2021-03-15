@@ -8,7 +8,6 @@ class App extends React.Component {
   render() {
       return (
         <div className='App'>
-          <h1>This is ToDo Component</h1>
           <ToDo />
         </div>
       )

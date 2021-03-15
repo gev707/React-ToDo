@@ -6,6 +6,15 @@
   text-align: center;
   background: linear-gradient(#283048,#859398);
 }
+::-webkit-scrollbar{
+  width: 5px;
+}
+::-webkit-scrollbar-thumb{
+  background: #859398;
+}
+::-webkit-scrollbar-track{
+  background: #3e4866;
+}
 .pos-relative{
   position: relative;
 }
@@ -17,13 +26,6 @@ h2{
   color:rgba(44, 116, 184, 0.788);
   font-size: 2rem;
 }
-
-.d-flex {
-  display: flex;
-}
-.justify-content-around{
-  justify-content: space-around;
-}
 h1{
   text-align: center;
   display: inline-block;
@@ -34,34 +36,72 @@ h1{
   margin-top:1rem !important;
   margin-bottom: 2rem !important;
 }
-.br-2 {
-  border:2px solid red;
-  color: #fff;
+.d-flex {
+  display: flex;
+}
+.justify-content-between{
+  justify-content: space-between;
+}
+.justify-content-around{
+  justify-content: space-around;
 }
 
-.menu {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width:auto;
-  margin:1rem auto;
-  height: auto;
-  background: #283048;
-  color: #fff;
-  font-size: 20px;
-  padding: 1rem;
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
 }
-.menu p ,h2{
- margin: 0;
+.row {
+  width:100%;
 }
-.btn-product {
-  margin-left: 25px;
-  background: #283048;
-  color: #fff;
-  padding: 0.5rem;
-  border-radius: 15px;
-  box-shadow: 0px 5px 12px #00000080;
+.col {
+  width:100%;
 }
-.product{
-  padding-block-end: 1rem;
+@media screen and (min-width: 1200px){
+  .container {
+    max-width: 1170px;
+  }
+  .col{
+    width:33.333% !important;
+  }
+}
+
+@media  screen and (min-width: 992px){
+  .container {
+    max-width: 960px;
+  }
+  .col{
+    width:33.333% !important;
+  }
+  .textHolder {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap:wrap;
+    margin: 4rem 0;
+  }
+  .inputHolder {
+    display: flex;
+    
+  }
+}
+.filter{
+  filter:blur(2px)
+}
+.noFilter {
+  filter: blur(0);
+}
+
+@media screen and (max-width: 767px){
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 320px){
+  .container {
+    max-width: 100%;
+  } 
+ 
 }

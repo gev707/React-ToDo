@@ -3,32 +3,44 @@
     top:50%;
     left:50%;
     transform: translate(-50%, -50%);
-    width:500px;
-    height:400px;
-    background: #ffffff;
-    box-shadow: 0px 0px 15px rgb(0 0 0 /15%);
+    width:600px;
+    height:500px;
+    background: linear-gradient(#283048,#859398);
+    box-shadow: 0px 0px 20px rgb(0 0 0 /50%);
     border-radius: 5px;
     display:block;
     transition:all 0.3s ease;
     opacity: 1;
     display: block;
+    overflow:hidden;
 }
 .modalClose{
     display: none;
     width: 0;
 }
-.modalHolder button{
+.btnSave{
     position: absolute;
+    display: flex;
     bottom: 10px;
     left:50%;
     transform: translateX(-50%);
+}
+.btnSave button{
     background: none;
-    border:2px solid rgb(99, 138, 185);
-    color:rgb(99, 138, 185);
+    border:2px solid #305563;
+    color:#305563;
     padding:8px 15px;
     font-size: 15px;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
+    transition: all 0.5s ease;
+    margin: 0 5px;
+}
+.modalHolder button:hover{
+
+    background: #305563;
+    color:#fff;
+    transition: all 0.5s ease;
 }
 .modalHolder h2{
     margin-top: 2rem;
@@ -38,6 +50,7 @@
 .closeModal{
     position: relative;
     cursor: pointer;
+    transition:all 0.3s ease;
 }
 .closeModal span{
     display: block;
@@ -61,4 +74,90 @@
     top:0px;
     z-index: 111;
     transform: rotate(80deg);
+}
+.closeModal:hover span {
+    background-color:rgb(192, 83, 192);
+}
+.closeModal:hover span::after{
+    background-color:rgb(192, 83, 192);
+}
+.textHolder {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap:wrap;  
+}
+.btnAddText {
+  box-shadow: -3px 0px 2px rgb(255 255 255 / 50%);
+  background: #305563;
+  border: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  outline: none;
+  color: rgb(99, 138, 185);
+  font-weight: 700;
+  font-size: 14px;
+  cursor:pointer  !important;
+  transition: all 0.3s ease-out;
+  height: 32px;
+  width: 130px;
+}
+.inputHolder {
+display: flex;
+  height: auto;
+  box-shadow: 2px 2px 20px rgb(0 0 0 / 10%);
+  padding:10px 15px;
+  margin:2rem 0;
+  height: 60px;
+  align-items: center;
+  border-radius: 15px;
+}
+.btnHolder{
+    display: flex;
+    justify-content: flex-end;
+    height: auto;
+    box-shadow: 2px 2px 20px rgb(255 255 255 / 10%);
+    padding:10px 15px;
+    margin:2rem 0;
+    height: 60px;
+    align-items: center;
+   border-radius: 15px;
+}
+.inputItem{
+display: flex;
+justify-content: flex-start;
+  width:250px;
+  height:32px;
+  padding: 10px;
+  border: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin-right: 5px;
+  outline: none;
+  background: transparent;
+  box-shadow: 3px 0px 2px rgb(255 255 255 / 50%);
+  transition: all 1s ease-out;
+  padding-top: 8px;
+}
+.inputItem:focus{
+  box-shadow: 0px 0px 5px rgb(99, 138, 185) / 50%;
+}
+.inputItem:hover{
+  width: 450px !important;
+  background:#305563;
+  color: aliceblue;
+  transition: width 2.5s;
+}
+.inputItem:disabled{
+  width:250px !important;
+  background: rgba(221, 221, 221, 0.452);
+}
+
+.textarea {
+  width:100%;
+  background: transparent;
+  border:none;
+  box-shadow: 0px 0px 10px rgb(255 255 255 / 25%);
+  padding:5px 10px;
+  border-radius: 15px;
+  outline: none;
 }

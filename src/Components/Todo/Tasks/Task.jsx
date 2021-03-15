@@ -11,23 +11,23 @@ const Task = ({
     deleteTask, 
     isAnyTaskChecked,
     isChecked,
-    editTask 
+    toggleOpenModal
     }) => {
     return (
         <div className={!isChecked ? styles.taskHolder : styles.tasks}>
             <input
                 className={styles.check}
                 type='checkbox'
-                onChange={() => handleToggleCheckTasks(task._id)}
+                onChange={(e) => handleToggleCheckTasks(task._id)}
                 checked={isChecked}
             />
-            {console.log(isChecked)}
             <div className={styles.taskFlex}>
-                <p>{task.text}</p>
+                <p>Title: {task.title}</p>
+                <p>Description: {task.description}</p>
                 <div>
                     <button>
                         <FontAwesomeIcon
-                            onClick={(e) => deleteTask(task._id)}
+                            onClick={() => deleteTask(task._id)}
                             icon={faTrashAlt}
                             disabled={isAnyTaskChecked}
                         />
@@ -35,7 +35,7 @@ const Task = ({
                     <button>
                         <FontAwesomeIcon
                             icon={faAddressCard}
-                            onClick={()=>editTask()}
+                            onClick={toggleOpenModal}
                         />
                     </button>
                 </div>
@@ -48,13 +48,12 @@ const Task = ({
 Task.propTypes = {
     task:PropTypes.shape({
         _id:PropTypes.string.isRequired,
-        text:PropTypes.string,
+        title:PropTypes.string.isRequired,
+        description:PropTypes.string.isRequired
     }),
     handleToggleCheckTasks:PropTypes.func,
-    deleteTask:PropTypes.func,
-    editTask:PropTypes.func,
-    isAnyTaskChecked:PropTypes.bool,
-    isChecked:PropTypes.bool.isRequired
+    deleteTask:PropTypes.func.isRequired,
+    isChecked:PropTypes.bool
 
 }
 export default memo(Task);

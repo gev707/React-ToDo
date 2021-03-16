@@ -1,0 +1,47 @@
+.confirm {
+    position: absolute;
+    left:50%;
+    transform: translateX(-50%);
+    top:20%;
+    width:400px;
+    display: block;
+    background: #fff;
+}
+h2{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color:#305563;
+    font-size: 22px !important;
+    padding: 1rem;
+}
+.closeConfirm{
+    box-shadow: -3px 0px 2px rgb(255 255 255 / 50%);
+    background: #ddd;
+    border: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    outline: none;
+    
+    font-weight: 700;
+    font-size: 14px;
+    cursor:pointer  !important;
+    transition: all 0.3s ease-out;
+    height: 32px;
+    width: 130px;
+}
+.btnDelete{
+        box-shadow: -3px 0px 2px rgb(255 255 255 / 50%);
+        background: #b83912;
+        border: none;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        outline: none;
+        font-weight: 700;
+        font-size: 14px;
+        cursor:pointer  !important;
+        transition: all 0.3s ease-out;
+        height: 32px;
+        width: 130px;
+}
+.dNone{
+    display: none;
+}

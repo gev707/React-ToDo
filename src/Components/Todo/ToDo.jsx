@@ -2,6 +2,7 @@ import React from "react";
 import IdGenerator from "../Todo/helpers/IdGenerators";
 import Task from '../Todo/Tasks/Task';
 import Modal from '../Todo/Modal/Modal'
+import Confirm from '../Todo/Confirm/Confirm'
 import styles from "./todo.module.css";
 
 class Todo extends React.Component {
@@ -24,7 +25,8 @@ class Todo extends React.Component {
             },
         ],
         checkedTasks: new Set(),
-        isOpenModal:false
+        isOpenModal:false,
+        isOpenConfirm:false
     };
     addTask = (formData) => {
         const task = [...this.state.tasks];
@@ -37,9 +39,16 @@ class Todo extends React.Component {
         });
 
     }
-    deleteTask = (id) => {
+        deleteTask = (id) => {
         let task = [...this.state.tasks];
         task = task.filter(task => task._id !== id)
+        this.setState({
+            tasks: task
+        })
+    }
+    deleteAllCard = (id) => {
+        let task = [...this.state.tasks];
+        task = task.filter(task => task._id === id)
         this.setState({
             tasks: task
         })
@@ -78,8 +87,14 @@ class Todo extends React.Component {
             isOpenModal: !isOpenModal
         })
     }
+    toggleOpenConfirm = () => {
+        const { isOpenConfirm } = this.state
+        this.setState({
+            isOpenConfirm: !isOpenConfirm
+        })
+    }
     render() {
-        const { tasks, checkedTasks, isOpenModal} = this.state;
+        const { tasks, checkedTasks, isOpenModal,isOpenConfirm} = this.state;
         const task = tasks.map(task => {
             return <Task
                 task={task}
@@ -93,26 +108,27 @@ class Todo extends React.Component {
         });
         return (
             <section className='container'>
-                <div className={isOpenModal ? 'filter' : "noFilter"}>
+                <div className={isOpenModal || isOpenConfirm & tasks.length===0? 'filter' : "noFilter"}>
                     <h1>This is ToDo Component</h1>
                     <div className={styles.inputHolder}>
                         <button 
                             className={styles.btnAddText} 
                             onClick={this.toggleOpenModal}
-                            >Add Task Modal
+                            >Add Card Modal
                         </button>
                     </div>
                     <div className={styles.btnHolder}>
                         <button
-                            onClick={this.deleteCheckedTasks}
+                            onClick={this.toggleOpenConfirm}
                             className={styles.btnDeleteAll}
-                            disabled={!checkedTasks.size}
+                            disabled={tasks.length===0}
                         >
-                            Delete Checked
+                            Delete All Cards
                         </button>
                         <button
                             onClick={this.toggleCheckedAllTasks}
                             className={styles.btnCheckAll}
+                            disabled={tasks.length===0}
                         >
                             {tasks.length === checkedTasks.size ? "Remove Checked" : "Checked All"}
                         </button>
@@ -120,7 +136,7 @@ class Todo extends React.Component {
                     <div className={styles.container}>
                         <div className={styles.row}>
                             <div className={styles.textHolder}>
-                                {task.length ? task : <h2>Add Some Task</h2>}
+                                {task.length ? task : <h2>Add Some Card</h2>}
                             </div>
                         </div>
                     </div>
@@ -131,6 +147,13 @@ class Todo extends React.Component {
                     checkedTasks={checkedTasks}
                     addTask={this.addTask}
                 />}
+
+                {
+                   isOpenConfirm && <Confirm 
+                        onHide={this.toggleOpenConfirm}
+                        deleteCard = {this.deleteAllCard}
+                   />
+                }
             </section>
         )
     }

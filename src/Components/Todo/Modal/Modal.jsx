@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent, createRef } from "react";
 import styles from "./modal.module.css";
+
 class Modal extends PureComponent {
     constructor(props) {
         super(props);
@@ -26,12 +27,7 @@ class Modal extends PureComponent {
             description
         }
         this.props.addTask(formData)
-        this.setState({
-            title: '',
-            description: ''
-        },()=>{
-            this.props.onHide()
-        })
+        this.props.onHide();
     };
 
     componentDidMount() {
@@ -43,7 +39,9 @@ class Modal extends PureComponent {
         const {title,description} = this.state
         
         return (
-                <div className={styles.modalHolder}> 
+                <div 
+                     className={styles.modalHolder}
+                > 
                     <div  className={styles.closeModal}>
                         <span onClick={onHide}></span>
                     </div>
@@ -54,20 +52,19 @@ class Modal extends PureComponent {
                                 name='title'
                                 className={styles.inputItem}
                                 type="text"
-                                placeholder='Add some text'
+                                placeholder='Add some Card'
                                 onChange={this.handleChangeInputValue}
                                 onKeyPress={this.handleSubmit}
                                 value={title}
                                 ref={this.inputRef}
                             />
-                           
                         </div>
                         <div>
                             <textarea
                                 name='description'
                                 className={styles.textarea}
                                 onChange={this.handleChangeInputValue}
-                                placeholder='Description...'
+                                placeholder='Card Description. . . '
                                 style={{ resize: 'none' }}
                                 value={description}
                                 >
@@ -90,7 +87,6 @@ class Modal extends PureComponent {
     
 }
 Modal.propTypes = {
-    isOpen:PropTypes.bool,
-    editTask:PropTypes.func
+    isOpenModal:PropTypes.bool.isRequired,
 }
 export default Modal

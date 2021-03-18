@@ -100,15 +100,9 @@ class Todo extends React.Component {
         return this.state.cards.find(card => card._id === id)
     };
 
-    setEditableCard = (editableCard)=> {
+    toggleSetCardModal = (editableCard = null) => {
         this.setState({
             editableCard
-        })
-    };
-
-    removeEditableCard = ()=> {
-        this.setState({
-            editableCard:null
         })
     }
     handleEditCard = (editableCard)=> {
@@ -130,12 +124,12 @@ class Todo extends React.Component {
                 isAnyCardChecked={checkedCards.size}
                 isChecked={checkedCards.has(card._id)}
                 toggleOpenModal={this.toggleOpenModal}
-                setEditableCard={this.setEditableCard}
+                setEditableCard={this.toggleSetCardModal}
             />
         });
         return (
             <section className='container'>
-                <div className={isOpenModal || isOpenConfirm ? 'filter' : "noFilter"}>
+                <div className={editableCard || isOpenConfirm ? 'filter' : "noFilter"}>
                     <h1>This is ToDo Component</h1>
                     <div className={styles.inputHolder}>
                         <button
@@ -177,9 +171,9 @@ class Todo extends React.Component {
                 }
                 {
                     editableCard && <Modal
-                        onHide={this.removeEditableCard}
+                        onHide={this.toggleSetCardModal}
                         onSubmit={this.handleEditCard}
-                        editableCard={this.state.editableCard} 
+                        editableCard={editableCard} 
                     />
                 }
                 {

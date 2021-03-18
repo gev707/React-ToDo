@@ -23,7 +23,6 @@ class Modal extends PureComponent {
     handleSubmit = ({ key,type }) => {
         const { title, description, } = this.state;
         if (!title || !description || (type === 'keypress' && key !== 'Enter')) return;
-        
         this.props.onSubmit(this.state);
         this.props.onHide();
     };
@@ -41,7 +40,7 @@ class Modal extends PureComponent {
                      className={styles.modalHolder}
                 > 
                     <div  className={styles.closeModal}>
-                        <span onClick={onHide}></span>
+                        <span onClick={event=>onHide()}></span>
                     </div>
                     <h2>{editableCard?"Edit Card" :'Create Your Card'}</h2>
                     <div className='p-2'>
@@ -71,7 +70,7 @@ class Modal extends PureComponent {
                     </div>
                     <div className={styles.btnSave}>
                         <button 
-                            onClick={onHide}
+                            onClick={event => onHide()}
                             >Close Card
                         </button>
                         <button 

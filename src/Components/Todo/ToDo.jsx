@@ -7,7 +7,7 @@ import styles from "./todo.module.css";
 
 class Todo extends React.Component {
     state = {
-        tasks: [
+        cards: [
             {
                 _id: IdGenerator(),
                 title: 'Card-1',
@@ -24,61 +24,56 @@ class Todo extends React.Component {
                 description: 'Card-3'
             },
         ],
-        checkedTasks: new Set(),
-        isOpenModal:false,
-        isOpenConfirm:false
+        checkedCards: new Set(),
+        isOpenModal: false,
+        isOpenConfirm: false,
+        editableCard:null
     };
-    addTask = (formData) => {
-        const task = [...this.state.tasks];
-        task.push({
+    addCard = (formData) => {
+        const card = [...this.state.cards];
+        card.push({
             ...formData,
             _id: IdGenerator()
         });
         this.setState({
-            tasks: task,
+            cards: card
         });
 
     }
-        deleteTask = (id) => {
-        let task = [...this.state.tasks];
-        task = task.filter(task => task._id !== id)
+    deleteCard = (id) => {
+        let cards = [...this.state.cards];
+        cards = cards.filter(card => card._id !== id)
         this.setState({
-            tasks: task
+            cards
         })
     }
-    deleteAllCard = (id) => {
-        let task = [...this.state.tasks];
-        task = task.filter(task => task._id === id)
+
+    handleToggleCheckCards = (_id) => {
+        let checkedCards = new Set(this.state.checkedCards)
+        if (!checkedCards.has(_id)) checkedCards.add(_id);
+        else checkedCards.delete(_id);
         this.setState({
-            tasks: task
-        })
-    }
-    handleToggleCheckTasks = (_id) => {
-        let checkedTasks = new Set(this.state.checkedTasks)
-        if (!checkedTasks.has(_id)) checkedTasks.add(_id);
-        else checkedTasks.delete(_id);
-        this.setState({
-            checkedTasks
+            checkedCards
         });
     }
-    deleteCheckedTasks = () => {
-        let tasks = this.state.tasks;
-        let checkedTasks = this.state.checkedTasks;
-        tasks = tasks.filter(task => !checkedTasks.has(task._id));
+    deleteCheckedCard = () => {
+        let cards = this.state.cards;
+        let checkedCards = this.state.checkedCards;
+        cards = cards.filter(card => !checkedCards.has(card._id));
         this.setState({
-            tasks,
-            checkedTasks: new Set()
+            cards,
+            checkedCards: new Set()
         })
     }
-    toggleCheckedAllTasks = () => {
-        let { tasks } = this.state;
-        let checkedTasks = this.state.checkedTasks;
-        if (tasks.length === checkedTasks.size) checkedTasks.clear();
-        else tasks.forEach(task => {
-            checkedTasks.add(task._id);
+    toggleCheckedAllCards = () => {
+        let { cards } = this.state;
+        let checkedCards = this.state.checkedCards;
+        if (cards.length === checkedCards.size) checkedCards.clear();
+        else cards.forEach(card => {
+            checkedCards.add(card._id);
         })
         this.setState({
-            checkedTasks
+            checkedCards
         })
     }
     toggleOpenModal = () => {
@@ -93,67 +88,108 @@ class Todo extends React.Component {
             isOpenConfirm: !isOpenConfirm
         })
     }
+    getSingleCardFromCheckedCards = () => {
+        if(this.state.checkedCards.size !==1){
+            return
+        }
+        let id =null;
+        this.state.checkedCards.forEach(_id=>{
+            id = _id
+        })
+
+        return this.state.cards.find(card => card._id === id)
+    };
+
+    setEditableCard = (editableCard)=> {
+        this.setState({
+            editableCard
+        })
+    };
+
+    removeEditableCard = ()=> {
+        this.setState({
+            editableCard:null
+        })
+    }
+    handleEditCard = (editableCard)=> {
+        const cards = [...this.state.cards];
+        const index = cards.findIndex(card=>card._id === editableCard._id)
+        cards[index] = editableCard;
+        this.setState({
+            cards
+        })
+    }
     render() {
-        const { tasks, checkedTasks, isOpenModal,isOpenConfirm} = this.state;
-        const task = tasks.map(task => {
+        const { cards, checkedCards, isOpenModal, isOpenConfirm,editableCard } = this.state;
+        const card = cards.map(card => {
             return <Task
-                task={task}
-                key={task._id}
-                deleteTask={this.deleteTask}
-                handleToggleCheckTasks={this.handleToggleCheckTasks}
-                isAnyTaskChecked={checkedTasks.size}
-                isChecked={checkedTasks.has(task._id)}
+                card={card}
+                key={card._id}
+                deleteCard={this.deleteCard}
+                handleToggleCheckCards={this.handleToggleCheckCards}
+                isAnyCardChecked={checkedCards.size}
+                isChecked={checkedCards.has(card._id)}
                 toggleOpenModal={this.toggleOpenModal}
+                setEditableCard={this.setEditableCard}
             />
         });
         return (
             <section className='container'>
-                <div className={isOpenModal || isOpenConfirm & tasks.length===0? 'filter' : "noFilter"}>
+                <div className={isOpenModal || isOpenConfirm ? 'filter' : "noFilter"}>
                     <h1>This is ToDo Component</h1>
                     <div className={styles.inputHolder}>
-                        <button 
-                            className={styles.btnAddText} 
+                        <button
+                            className={styles.btnAddText}
                             onClick={this.toggleOpenModal}
-                            >Add Card Modal
+                        >Add Card Modal
                         </button>
                     </div>
                     <div className={styles.btnHolder}>
                         <button
                             onClick={this.toggleOpenConfirm}
                             className={styles.btnDeleteAll}
-                            disabled={tasks.length===0}
+                            disabled={cards.length === 0}
                         >
                             Delete All Cards
                         </button>
                         <button
-                            onClick={this.toggleCheckedAllTasks}
+                            onClick={this.toggleCheckedAllCards}
                             className={styles.btnCheckAll}
-                            disabled={tasks.length===0}
+                            disabled={cards.length === 0}
                         >
-                            {tasks.length === checkedTasks.size ? "Remove Checked" : "Checked All"}
+                            {checkedCards.size && cards.length === checkedCards.size ? "Remove Checked" : "Checked All"}
                         </button>
                     </div>
                     <div className={styles.container}>
                         <div className={styles.row}>
                             <div className={styles.textHolder}>
-                                {task.length ? task : <h2>Add Some Card</h2>}
+                                {card.length ? card : <h2>Add some Card!</h2>}
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {isOpenModal && <Modal 
-                    onHide={this.toggleOpenModal}
-                    checkedTasks={checkedTasks}
-                    addTask={this.addTask}
-                />}
-
                 {
-                   isOpenConfirm && <Confirm 
-                        onHide={this.toggleOpenConfirm}
-                        deleteCard = {this.deleteAllCard}
-                   />
+                    isOpenModal && <Modal
+                        onHide={this.toggleOpenModal}
+                        onSubmit={this.addCard}
+                    />
                 }
+                {
+                    editableCard && <Modal
+                        onHide={this.removeEditableCard}
+                        onSubmit={this.handleEditCard}
+                        editableCard={this.state.editableCard} 
+                    />
+                }
+                {
+                    isOpenConfirm && <Confirm
+                        onHide={this.toggleOpenConfirm}
+                        deleteCard={this.deleteCheckedCard}
+                        countOrCardTitle={checkedCards.size !==1 ? checkedCards.size : this.getSingleCardFromCheckedCards().title}
+                    />
+                }
+
             </section>
         )
     }

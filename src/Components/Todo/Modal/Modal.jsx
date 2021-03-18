@@ -8,7 +8,8 @@ class Modal extends PureComponent {
         this.inputRef = createRef();
         this.state = {
             title: '',
-            description: ''
+            description: '',
+            ...props.editableCard
         }
     };
 
@@ -20,13 +21,10 @@ class Modal extends PureComponent {
     };
 
     handleSubmit = ({ key,type }) => {
-        const { title, description } = this.state;
+        const { title, description, } = this.state;
         if (!title || !description || (type === 'keypress' && key !== 'Enter')) return;
-        const formData = {
-            title,
-            description
-        }
-        this.props.addTask(formData)
+        
+        this.props.onSubmit(this.state);
         this.props.onHide();
     };
 
@@ -35,7 +33,7 @@ class Modal extends PureComponent {
     }
 
     render(){
-        const {onHide} = this.props;
+        const {onHide,editableCard} = this.props;
         const {title,description} = this.state
         
         return (
@@ -45,7 +43,7 @@ class Modal extends PureComponent {
                     <div  className={styles.closeModal}>
                         <span onClick={onHide}></span>
                     </div>
-                    <h2>Create Your Card</h2>
+                    <h2>{editableCard?"Edit Card" :'Create Your Card'}</h2>
                     <div className='p-2'>
                         <div className={styles.inputHolder}>
                             <input
@@ -78,7 +76,7 @@ class Modal extends PureComponent {
                         </button>
                         <button 
                             onClick={this.handleSubmit}
-                            >Add Card
+                            >{editableCard ? 'Save Card':'Add Card' }
                         </button>
                     </div>
                 </div>
@@ -87,6 +85,7 @@ class Modal extends PureComponent {
     
 }
 Modal.propTypes = {
-    isOpenModal:PropTypes.bool.isRequired,
+    onHide:PropTypes.func.isRequired,
+    onSubmit:PropTypes.func.isRequired
 }
 export default Modal

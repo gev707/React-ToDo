@@ -1,20 +1,29 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './confirm.module.css'
-const Confirm = (props)=>{
-    const {onHide,deleteCard} = props
-    const deleteAllCards = ()=>{
-        deleteCard();
-        onHide();
+const Confirm = ({onHide,deleteCard,countOrCardTitle})=>{
+    const deleteCurrentCard = () => {
+            deleteCard();
+            onHide();
     }
     return (
         <div onHide={onHide} className={styles.confirm}>
-            <h2>Do you want delete card</h2>
+            <h2>{countOrCardTitle !==0? 'Are you sure!':'Please check some card!'}</h2>
+            <small>{countOrCardTitle !==0?`Do you want delete ( ${countOrCardTitle} ) from Cards?`:'There are no card to delete'}</small>
             <hr />
             <div className='p-3'>
             <button onClick={onHide} className={styles.closeConfirm}>Cancel</button>
-            <button onClick={deleteAllCards} className={styles.btnDelete}>Delete Card</button> 
+            <button onClick={deleteCurrentCard} className={styles.btnDelete}>Delete Card</button> 
             </div>
         </div>
     )
+}
+Confirm.propTypes = {
+    onHide:PropTypes.func.isRequired,
+    deleteCard:PropTypes.func.isRequired,
+    countOrCardTitle:PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string
+    ])
 }
 export default Confirm

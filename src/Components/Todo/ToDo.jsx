@@ -1,50 +1,54 @@
 import React from "react";
-import IdGenerator from "../Todo/helpers/IdGenerators";
 import Task from '../Todo/Tasks/Task';
 import Modal from '../Todo/Modal/Modal'
 import Confirm from '../Todo/Confirm/Confirm'
 import styles from "./todo.module.css";
-
+const API_HOST = 'http://localhost:3001';
 class Todo extends React.Component {
     state = {
-        cards: [
-            {
-                _id: IdGenerator(),
-                title: 'Card-1',
-                description: 'Card-1'
-            },
-            {
-                _id: IdGenerator(),
-                title: 'Card-2',
-                description: 'Card-2'
-            },
-            {
-                _id: IdGenerator(),
-                title: 'Card-3',
-                description: 'Card-3'
-            },
-        ],
+        cards: [],
         checkedCards: new Set(),
         isOpenModal: false,
         isOpenConfirm: false,
-        editableCard:null
+        editCard:null
     };
     addCard = (formData) => {
-        const card = [...this.state.cards];
-        card.push({
-            ...formData,
-            _id: IdGenerator()
-        });
-        this.setState({
-            cards: card
-        });
-
+       
+        fetch(`${API_HOST}/task`,{
+            method:'POST',
+            body:JSON.stringify(formData),
+            headers: {
+                'Content-type' : 'application/json'
+            }
+        })
+        .then(res=>res.json())
+        .then(data => {
+            if(data.error) throw data.error
+            const cards = [...this.state.cards];
+            cards.push(data)
+            this.setState({
+                cards
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
     }
     deleteCard = (id) => {
-        let cards = [...this.state.cards];
-        cards = cards.filter(card => card._id !== id)
-        this.setState({
-            cards
+        fetch(`${API_HOST}/task/${id}`,{
+            method:'DELETE',
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            if(data.error) throw data.error;
+            let cards = [...this.state.cards];
+            cards = cards.filter(card => card._id !== id)
+            this.setState({
+                cards
+            })
+        })
+        .catch(error=>{
+            console.log('Catch Error', error)
         })
     }
 
@@ -57,17 +61,32 @@ class Todo extends React.Component {
         });
     }
     deleteCheckedCard = () => {
-        let cards = this.state.cards;
-        let checkedCards = this.state.checkedCards;
-        cards = cards.filter(card => !checkedCards.has(card._id));
-        this.setState({
-            cards,
-            checkedCards: new Set()
+        const{checkedCards} = this.state;
+        fetch(`${API_HOST}/task`,{
+            method:'PATCH',
+            body: JSON.stringify({tasks:Array.from(checkedCards)}),
+            headers:{
+                'Content-Type':'application/json' 
+            }
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            if(data.error) throw data.error;
+            let cards = this.state.cards;
+            cards = cards.filter(card => !checkedCards.has(card._id));
+            this.setState({
+                cards,
+                checkedCards: new Set()
+            })
+        })
+        .catch(error=>{
+            console.log('Catch Error', error)
         })
     }
     toggleCheckedAllCards = () => {
-        let { cards } = this.state;
         let checkedCards = this.state.checkedCards;
+        let { cards } = this.state;
+        
         if (cards.length === checkedCards.size) checkedCards.clear();
         else cards.forEach(card => {
             checkedCards.add(card._id);
@@ -75,6 +94,7 @@ class Todo extends React.Component {
         this.setState({
             checkedCards
         })
+       
     }
     toggleOpenModal = () => {
         const { isOpenModal } = this.state
@@ -100,21 +120,49 @@ class Todo extends React.Component {
         return this.state.cards.find(card => card._id === id)
     };
 
-    toggleSetCardModal = (editableCard = null) => {
+    toggleSetCardModal = (editCard = null) => {
         this.setState({
-            editableCard
+            editCard
         })
     }
-    handleEditCard = (editableCard)=> {
-        const cards = [...this.state.cards];
-        const index = cards.findIndex(card=>card._id === editableCard._id)
-        cards[index] = editableCard;
-        this.setState({
-            cards
+    handleEditCard = (editCard)=> {
+        fetch(`${API_HOST}/task/${editCard._id}`,{
+            method:'PUT',
+            body: JSON.stringify(editCard),
+            headers:{
+                'Content-Type':'application/json' 
+            }
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            if(data.error) throw data.error;
+            const cards = [...this.state.cards];
+            const index = cards.findIndex(card=>card._id === editCard._id)
+            cards[index] = editCard;
+            this.setState({
+                cards
+            })
+        })
+        .catch(error=>{
+            console.log('Catch Error', error)
+        })
+        
+    }
+    componentDidMount(){
+        fetch(`${API_HOST}/task`,)
+        .then(res=>res.json())
+        .then(data=>{
+            if(data.error) throw data.error
+            this.setState({
+                cards:data
+            })
+        })
+        .catch(error=> {
+            console.log(error)
         })
     }
     render() {
-        const { cards, checkedCards, isOpenModal, isOpenConfirm,editableCard } = this.state;
+        const { cards, checkedCards, isOpenModal, isOpenConfirm,editCard } = this.state;
         const card = cards.map(card => {
             return <Task
                 card={card}
@@ -129,7 +177,7 @@ class Todo extends React.Component {
         });
         return (
             <section className='container'>
-                <div className={editableCard || isOpenConfirm ? 'filter' : "noFilter"}>
+                <div className={editCard || isOpenModal || isOpenConfirm ? 'filter' : "noFilter"}>
                     <h1>This is ToDo Component</h1>
                     <div className={styles.inputHolder}>
                         <button
@@ -170,10 +218,10 @@ class Todo extends React.Component {
                     />
                 }
                 {
-                    editableCard && <Modal
+                    editCard && <Modal
                         onHide={this.toggleSetCardModal}
                         onSubmit={this.handleEditCard}
-                        editableCard={editableCard} 
+                        editCard={editCard} 
                     />
                 }
                 {

@@ -12,3 +12,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.datapicker {
+  background: transparent;
+  border-bottom: 1px solid #859398 !important;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  color: #859398;
+  outline: none;
+  padding: 5px
+}
+.react-datepicker {
+  background: linear-gradient(#ddd,#283048);
+}

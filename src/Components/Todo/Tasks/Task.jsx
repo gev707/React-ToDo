@@ -23,6 +23,7 @@ const Task = ({
             <div className={styles.taskFlex}>
                 <p>Title: {card.title}</p>
                 <p>Description: {card.description}</p>
+                <p>Date: {card.date.slice(0,10)}</p>
                 <div>
                     <button>
                         <FontAwesomeIcon

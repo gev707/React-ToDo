@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent, createRef } from "react";
+import dateFormat from '../helpers/dateFormatter'
+import DatePicker from "react-datepicker";
 import styles from "./modal.module.css";
 
 class Modal extends PureComponent {
@@ -9,7 +11,8 @@ class Modal extends PureComponent {
         this.state = {
             title: '',
             description: '',
-            ...props.editableCard
+            ...props.editCard,
+            date:props.editCard ? new Date(props.editCard.date):new Date(),
         }
     };
 
@@ -23,17 +26,25 @@ class Modal extends PureComponent {
     handleSubmit = ({ key,type }) => {
         const { title, description, } = this.state;
         if (!title || !description || (type === 'keypress' && key !== 'Enter')) return;
-        this.props.onSubmit(this.state);
+        const formData ={
+            ...this.state,
+            date:dateFormat(this.state.date)
+        }
+        this.props.onSubmit(formData);
         this.props.onHide();
     };
-
+    setDate = (date) => {
+        this.setState({
+            date
+        })
+    }
     componentDidMount() {
         this.inputRef.current.focus();
     }
 
     render(){
-        const {onHide,editableCard} = this.props;
-        const {title,description} = this.state
+        const {onHide,editCard} = this.props;
+        const {title,description,date} = this.state
         
         return (
                 <div 
@@ -42,7 +53,7 @@ class Modal extends PureComponent {
                     <div  className={styles.closeModal}>
                         <span onClick={event=>onHide()}></span>
                     </div>
-                    <h2>{editableCard?"Edit Card" :'Create Your Card'}</h2>
+                    <h2>{editCard?"Edit Card" :'Create Your Card'}</h2>
                     <div className='p-2'>
                         <div className={styles.inputHolder}>
                             <input
@@ -67,6 +78,13 @@ class Modal extends PureComponent {
                                 >
                             </textarea>
                         </div>
+                        <div className="d-flex mt-3">
+                            <DatePicker 
+                                selected={date} 
+                                onChange={date => this.setDate(date)}
+                                className='datapicker' 
+                            />
+                        </div>
                     </div>
                     <div className={styles.btnSave}>
                         <button 
@@ -75,7 +93,7 @@ class Modal extends PureComponent {
                         </button>
                         <button 
                             onClick={this.handleSubmit}
-                            >{editableCard ? 'Save Card':'Add Card' }
+                            >{editCard ? 'Save Card':'Add Card' }
                         </button>
                     </div>
                 </div>
@@ -85,6 +103,6 @@ class Modal extends PureComponent {
 }
 Modal.propTypes = {
     onHide:PropTypes.func.isRequired,
-    onSubmit:PropTypes.func.isRequired
+    //onSubmit:PropTypes.func.isRequired
 }
 export default Modal

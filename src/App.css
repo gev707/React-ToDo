@@ -21,6 +21,13 @@ button:hover{
   opacity: 0.7;
   color:#222222;
 }
+ul {
+  margin:0;
+}
+li{
+  list-style: none;
+}
+
 .pos-relative{
   position: relative;
 }
@@ -65,6 +72,116 @@ h1{
 .col {
   width:100%;
 }
+.openNav {
+  position: absolute;
+  right:20px;
+  top:20px;
+  width:50px;
+  height:50px;
+  display: block;
+  z-index: 11111;
+  cursor: pointer;
+}
+.toggleSpan{
+  position: absolute;
+  top:0px;
+  right:15px;
+  width:35px;
+  height:3px;
+  display: block;
+  background-color: rgb(179, 179, 179);
+  transition: all 0.5s ease;
+}
+.toggleSpan::after{
+  position: absolute;
+  top:10px;
+  right:0px;
+  content:'';
+  width:35px;
+  height:3px;
+  display: block;
+  background-color: rgb(179, 179, 179);
+  transition: all 0.5s ease;
+}
+.toggleSpan::before{
+  position: absolute;
+  top:20px;
+  right:0px;
+  content:'';
+  width:35px;
+  height:3px;
+  display: block;
+  background-color: rgb(179, 179, 179);
+}
+.activeSpan{
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  width: 35px;
+  height: 3px;
+  display: block;
+  background-color: rgb(179, 179, 179);
+  transform: rotate(45deg);
+  transition: all 0.5s ease;
+}
+.activeSpan::after{
+  position: absolute;
+  content:'';
+  top:0px;
+  right:0px;
+  width:35px;
+  height:3px;
+  display: block;
+  background-color: rgb(179, 179, 179);
+  transform: rotate(-90deg);
+  transition: all 0.5s ease;
+}
+.nav-item{
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-link {
+  margin-left:0.5rem; 
+    font-size: 60px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: rgb(197, 197, 197);
+    white-space: nowrap;
+    -webkit-text-stroke: 1px;
+    -webkit-text-fill-color: transparent;
+    transition: 0.4s ease-in;
+    cursor:pointer;
+}
+.nav-link:hover {
+  color: #266c75;
+}
+.filter{
+  filter:blur(2px)
+}
+.noFilter {
+  filter: blur(0);
+}
+.vh{
+  height:100vh;
+  overflow-y: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 @media screen and (min-width: 1200px){
   .container {
     max-width: 1170px;
@@ -92,12 +209,7 @@ h1{
     
   }
 }
-.filter{
-  filter:blur(2px)
-}
-.noFilter {
-  filter: blur(0);
-}
+
 
 @media screen and (max-width: 767px){
   .container {

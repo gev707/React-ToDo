@@ -1,9 +1,11 @@
 import React from "react";
-import Task from '../Todo/Tasks/Task';
-import Modal from '../Todo/Modal/Modal'
-import Confirm from '../Todo/Confirm/Confirm'
+import Task from '../../Tasks/Task';
+import Modal from '../../Modal/Modal'
+import Confirm from '../../Confirm/Confirm';
 import styles from "./todo.module.css";
+
 const API_HOST = 'http://localhost:3001';
+
 class Todo extends React.Component {
     state = {
         cards: [],
@@ -64,7 +66,7 @@ class Todo extends React.Component {
         const{checkedCards} = this.state;
         fetch(`${API_HOST}/task`,{
             method:'PATCH',
-            body: JSON.stringify({tasks:Array.from(checkedCards)}),
+            body: JSON.stringify({tasks:[...checkedCards]}),
             headers:{
                 'Content-Type':'application/json' 
             }
@@ -205,7 +207,7 @@ class Todo extends React.Component {
                     <div className={styles.container}>
                         <div className={styles.row}>
                             <div className={styles.textHolder}>
-                                {card.length ? card : <h2>Add some Card!</h2>}
+                                {card.length ? card : <h2 className={styles.addSome}>Add some Card!</h2>}
                             </div>
                         </div>
                     </div>
@@ -231,7 +233,7 @@ class Todo extends React.Component {
                         countOrCardTitle={checkedCards.size !==1 ? checkedCards.size : this.getSingleCardFromCheckedCards().title}
                     />
                 }
-
+                
             </section>
         )
     }

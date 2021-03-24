@@ -1,33 +1,40 @@
 import styles from './navbar.module.css';
 import {Nav} from 'react-bootstrap';
-import {NavLink} from 'react-router-dom'
+import {NavLink} from 'react-router-dom';
+
  const Navbar = ({toggleNavbar}) => {
+     const menuItems = [
+         {
+             name:'Main',
+             to: '/',
+             exact:true,
+         },
+         {
+            name:'About',
+            to: '/about',
+            exact:true,
+        },
+        {
+            name:'Contact',
+            to: '/contact',
+            exact:true,
+        },
+        
+    ];
+     const menuItem = menuItems.map((item,index)=>{
+         return <NavLink
+             key = {index}
+             to = {item.to}
+             exact = {item.exact}
+             onClick={toggleNavbar}
+             className='nav-link' 
+         >{item.name}</NavLink>
+     })
     return (
         <Nav className={styles.navBar}>
             <Nav.Item>
-                <NavLink 
-                    to='/' 
-                    className='nav-link' 
-                    exact={true} 
-                    onClick={toggleNavbar}
-                    >Home
-                </NavLink>
-                <NavLink 
-                    to='/about' 
-                    className='nav-link' 
-                    exact={true}
-                    onClick={toggleNavbar}
-                    >About Us
-                </NavLink>
-                <NavLink 
-                    to='/contact' 
-                    className='nav-link' 
-                    exact={true}
-                    onClick={toggleNavbar}
-                    >Contact
-                </NavLink>
+                {menuItem}
             </Nav.Item>
-            
         </Nav>
     )
 }

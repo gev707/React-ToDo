@@ -35,3 +35,13 @@
     -webkit-text-fill-color:rgb(167, 167, 167);
     transition:  1s ease-in-out;
 }
+@media screen and (min-width:320px) and (max-width:768px) {
+    
+    .navBar{
+        width:100vw; 
+    }
+    .menuItem {
+        font-size: 25px;
+    }
+
+}

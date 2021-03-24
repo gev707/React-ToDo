@@ -103,6 +103,7 @@ class Modal extends PureComponent {
 }
 Modal.propTypes = {
     onHide:PropTypes.func.isRequired,
-    //onSubmit:PropTypes.func.isRequired
+    editCard:PropTypes.object,
+    onSubmit:PropTypes.func.isRequired
 }
 export default Modal

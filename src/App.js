@@ -4,45 +4,90 @@ import Navbar from './Components/Navbar/Navbar';
 import ToDo from './Components/pages/Todo/ToDo';
 import About from './Components/pages/About/About';
 import Contact from './Components/pages/Contact/Contact';
-
-import {Route,Switch ,Redirect} from 'react-router-dom'
+import NotFound from './Components/pages/NotFound/NotFound';
+import NotFoundCard from './Components/pages/NotFound/NotFoundCard';
+import SingleCard from './Components/pages/SingleCard/SingleCard'
+//
+import { Route, Switch, Redirect } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+const router = [
+  {
+    component: ToDo,
+    path: '/',
+    exact: true
+  },
+  {
+    component: About,
+    path: '/about',
+    exact: true
+  },
+  {
+    component: Contact,
+    path: '/contact',
+    exact: true
+  },
+  {
+    component: NotFound,
+    path: '/404',
+    exact: true
+  },
+  {
+    component: NotFoundCard,
+    path: '/notcard',
+    exact: true
+  },
+  {
+    component: SingleCard,
+    path: '/card/:id',
+    exact: true
+  },
+];
 class App extends React.Component {
-  state =  {
-    isOpen:false,
+  state = {
+    isOpen: false,
   }
-  toggleNavbar = ()=> {
-    const {isOpen} = this.state;
+  toggleNavbar = () => {
+    const { isOpen } = this.state;
     this.setState({
-      isOpen:!isOpen
+      isOpen: !isOpen
     })
   }
   render() {
-      const {isOpen} =this.state;
+    const routerPages = router.map((item, index) => {
       return (
-        <div className={isOpen ? 'App vh' : 'App'}>
-          <div onClick={this.toggleNavbar}  className='openNav'>
-            <span className={!isOpen?'toggleSpan':'activeSpan'}></span>
-          </div>
-          {
-            isOpen && <Navbar 
-              toggleNavbar={this.toggleNavbar}
-            />
-          }
-          <Switch>
-            <Route path='/' render={()=> <ToDo />} exact /> 
-            <Route path='/about' render={()=> <About />} exact />
-            <Route path='/contact' render={()=> <Contact />} exact />
-            <Redirect to='/'></Redirect>
-          </Switch>
-            
-            
-        </div>
+        <Route
+          key={index}
+          path={item.path}
+          component={item.component}
+          exact={item.exact}
+        />
+
       )
+    })
+    const { isOpen } = this.state;
+    return (
+      <div className={isOpen ? 'App vh' : 'App'}>
+        <div onClick={this.toggleNavbar} className='openNav'>
+          <span className={!isOpen ? 'toggleSpan' : 'activeSpan'}></span>
+        </div>
+        
+        {
+          isOpen && <Navbar
+            toggleNavbar={this.toggleNavbar}
+          />
+        }
+        <Switch>
+          {routerPages}
+          <Redirect to='/404'></Redirect>
+        </Switch>
+
+
+      </div>
+    )
   }
-  
+
 }
 
 

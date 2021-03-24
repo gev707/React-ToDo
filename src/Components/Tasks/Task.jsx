@@ -1,9 +1,11 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import styles from "./task.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faAddressCard } from '@fortawesome/free-solid-svg-icons';
+import {Link} from 'react-router-dom'
+import {withRouter} from  'react-router-dom'
 import { memo } from 'react';
-import React from 'react';
-import PropTypes from 'prop-types';
 
 const Task = ({ 
     card, 
@@ -11,7 +13,7 @@ const Task = ({
     deleteCard, 
     isChecked,
     setEditableCard,
-    }) => {
+}) => {
     return (
         <div className={!isChecked ? styles.taskHolder : styles.tasks}>
             <input
@@ -21,15 +23,14 @@ const Task = ({
                 checked={isChecked}
             />
             <div className={styles.taskFlex}>
-                <p>Title: {card.title}</p>
-                <p>Description: {card.description}</p>
+                <Link  to={'/card/' + card._id}><p>{card.title}</p></Link>
+                <p className={styles.description}>- Description - <br />{card.description}</p>
                 <p>Date: {card.date.slice(0,10)}</p>
                 <div>
                     <button>
                         <FontAwesomeIcon
                             onClick={() => deleteCard(card._id)}
                             icon={faTrashAlt}
-                           
                         />
                     </button>
                     <button>
@@ -56,4 +57,4 @@ Task.propTypes = {
     isChecked:PropTypes.bool
 
 }
-export default memo(Task);
+export default withRouter(memo(Task));

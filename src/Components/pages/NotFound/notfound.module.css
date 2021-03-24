@@ -1,0 +1,17 @@
+.notFound {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+@media screen and (min-width:320px) and (max-width:992px) {
+   .notFound h1{
+        display: block;
+        margin-top: 5rem !important;
+    }
+    .notFound img{
+        width: 100%;
+        margin: 3rem auto;
+        padding: 1rem;
+    }
+    
+}

@@ -35,6 +35,9 @@
     -webkit-text-fill-color:rgb(167, 167, 167);
     transition:  1s ease-in-out;
 }
+.activeMenuItem {
+    color: #266c75 !important;
+}
 @media screen and (min-width:320px) and (max-width:768px) {
     
     .navBar{

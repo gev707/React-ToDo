@@ -1,5 +1,5 @@
 .singleCardHolder {
-    background: rgba(0, 0, 0, 0.082);
+    background: rgba(0, 0, 0, 0.6);
     height:100vh;
     width:100vw;
     color:rgb(17, 68, 71);
@@ -14,16 +14,28 @@
     display: block;
     background: #fff;
     position: relative;
+    box-shadow: 5px -4px 5px rgb(0 0 0 /10%);
+    transform:perspective(600px) rotateY(-10deg);
+    -webkit-box-reflect:below 2px  linear-gradient(transparent,transparent,#0003);
+    transition: 0.5s ease;
 }
-.singleCardBody::before {
-    content:'';
-    position: absolute;
-    width:100%;
-    height:100%;
-    top:10px;
-    left:10px;
-    background: rgba(12, 66, 80, 0.507);
-    z-index: -1;
+.singleCardBody:hover {
+    box-shadow: 5px -4px 10px rgb(255 255 255 /12%);
+    transform:perspective(600px) rotateY(0deg);
+    -webkit-box-reflect:below 2px linear-gradient(transparent,transparent,#0004);
+}
+.singleCardBody h1 {
+    color: #266c75;
+    margin: 10px 0 0  !important;
+    padding: 1rem;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 13%);
+    display: inline-block;
+    width: 100%;
+}
+.singleCardBody h2 {
+    margin-top: 1rem;
+    color: #266c75;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 13%)
 }
 .singleCardBtns button{
     background: none;

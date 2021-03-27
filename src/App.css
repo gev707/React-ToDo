@@ -43,7 +43,7 @@ h2{
 h1{
   text-align: center;
   display: inline-block;
-  color:#266c75;
+  color:#ddd;
   box-shadow: 2px 2px 20px rgb(255 255 255 / 10%);
   font-size: 2.5em;
   padding: 0.5rem;
@@ -74,7 +74,7 @@ h1{
   width:100%;
 }
 .openNav {
-  position: absolute;
+  position: fixed;
   right:20px;
   top:20px;
   width:50px;
@@ -155,11 +155,14 @@ h1{
     white-space: nowrap;
     -webkit-text-stroke: 1px;
     -webkit-text-fill-color: transparent;
-    transition: 0.4s ease-in;
+    transition:all 1s ease; 
     cursor:pointer;
 }
 .nav-link:hover {
+  transition: 1s ease;
   color: #266c75;
+  -webkit-text-stroke: 0px;
+  -webkit-text-fill-color:#266c75;
 }
 .filter{
   filter:blur(2px)

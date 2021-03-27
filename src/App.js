@@ -5,8 +5,8 @@ import ToDo from './Components/pages/Todo/ToDo';
 import About from './Components/pages/About/About';
 import Contact from './Components/pages/Contact/Contact';
 import NotFound from './Components/pages/NotFound/NotFound';
-import NotFoundCard from './Components/pages/NotFound/NotFoundCard';
 import SingleCard from './Components/pages/SingleCard/SingleCard'
+
 //
 import { Route, Switch, Redirect } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -31,11 +31,6 @@ const router = [
   {
     component: NotFound,
     path: '/404',
-    exact: true
-  },
-  {
-    component: NotFoundCard,
-    path: '/notcard',
     exact: true
   },
   {
@@ -66,7 +61,7 @@ class App extends React.Component {
 
       )
     })
-    const { isOpen } = this.state;
+    const { isOpen} = this.state;
     return (
       <div className={isOpen ? 'App vh' : 'App'}>
         <div onClick={this.toggleNavbar} className='openNav'>
@@ -80,7 +75,7 @@ class App extends React.Component {
         }
         <Switch>
           {routerPages}
-          <Redirect to='/404'></Redirect>
+          <Redirect  to='/404' ></Redirect>
         </Switch>
 
 

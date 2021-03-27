@@ -17,8 +17,14 @@ figure{
     margin:0 auto !important;
     border-bottom:2px solid #fff ;
     border-radius: 15px ;
+    overflow: hidden;
+    transition: 0.7s ease;
+}
+figure:hover img{
+    transform: scale(1.1);
 }
 figure img {
+    transition: 0.7s ease;
     width:100%;
 }
 figure figcaption {
@@ -29,7 +35,7 @@ figure figcaption {
 
 .dropDown {
     position: fixed;
-    top:30px;
+    top:18px;
 }
 @media screen and (min-width:320px) and (max-width:768px) {
     .aboutHolder{

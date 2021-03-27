@@ -31,7 +31,6 @@ class Modal extends PureComponent {
             date:dateFormat(this.state.date)
         }
         this.props.onSubmit(formData);
-        this.props.onHide();
     };
     setDate = (date) => {
         this.setState({
@@ -88,7 +87,7 @@ class Modal extends PureComponent {
                     </div>
                     <div className={styles.btnSave}>
                         <button 
-                            onClick={event => onHide()}
+                            onClick={(e) => onHide()}
                             >Close Card
                         </button>
                         <button 
@@ -102,7 +101,6 @@ class Modal extends PureComponent {
     
 }
 Modal.propTypes = {
-    onHide:PropTypes.func.isRequired,
     editCard:PropTypes.object,
     onSubmit:PropTypes.func.isRequired
 }

@@ -14,14 +14,20 @@ code {
 }
 .datapicker {
   background: transparent;
-  border-bottom: 1px solid #859398 !important;
+  border-bottom: 1px solid #181a1b !important;
   outline: none;
   border: none;
-  border-radius: 5px;
-  color: #859398;
+  border-radius: 10px;
+  color: #181b1d;
   outline: none;
-  padding: 5px
+  padding: 5px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
 }
 .react-datepicker {
   background: linear-gradient(#ddd,#283048);
+}
+.react-datepicker-wrapper {
+  margin: 1rem auto;
 }

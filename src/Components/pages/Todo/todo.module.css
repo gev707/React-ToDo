@@ -5,7 +5,7 @@
 }
 .btnAddText {
   box-shadow: -3px 0px 2px rgb(255 255 255 / 50%);
-  background: #305563;
+  background: transparent;
   border: none;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -14,9 +14,31 @@
   font-weight: 700;
   font-size: 14px;
   cursor:pointer  !important;
-  transition: all 0.3s ease-out;
   height: 32px;
   width: 130px;
+  overflow:hidden;
+  position: relative;
+  z-index: 1;
+}
+.btnAddText::before{
+  content: '';
+  position: absolute;
+  top:0;
+  left:0;
+  transform: translateX(100%);
+  width:100%;
+  height:100%;
+  background: rgba(13, 81, 94, 0.671);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  transition: 1s ease;
+  z-index: -1;
+}
+.btnAddText:hover {
+  color:#fff !important;
+}
+.btnAddText:hover:before {
+  transform: translateX(0%);
 }
 .inputHolder {
   display: flex;
@@ -40,38 +62,11 @@
     align-items: center;
    border-radius: 15px;
 }
-.inputItem{
-  width:250px;
-  height:32px;
-  padding: 10px;
-  border: none;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  margin-right: 5px;
-  outline: none;
-  background: transparent;
-  box-shadow: -3px 0px 2px rgb(255 255 255 / 50%);
-  transition: all 1s ease-out;
-  padding-top: 8px;
-}
-.btnAdd{
-  box-shadow: 3px 0px 2px rgb(255 255 255 / 50%);
-  background: #305563;
-  border: none;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  outline: none;
-  color: rgb(99, 138, 185);
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease-out;
-  height: 32px;
-  
-}
+
+
 .btnDeleteAll{
   box-shadow: -3px 0px 2px rgb(255 255 255 / 50%);
-  background: #305563;
+  background: transparent;
   border: none;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -83,10 +78,35 @@
   transition: all 0.3s ease-out;
   height: 32px;
   width: 130px;
+  position: relative;
+  z-index: 0;
+  overflow:hidden;
 }
+.btnDeleteAll::before {
+  content: '';
+  position: absolute;
+  top:0;
+  left:0;
+  transform: translateX(100%);
+  width:100%;
+  height:100%;
+  background: rgba(13, 81, 94, 0.63);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  transition: 0.5s ease;
+  z-index: -1;
+  
+}
+.btnDeleteAll:hover:before {
+  transform: translateX(0);
+}
+.btnDeleteAll:hover {
+  color:#fff !important;
+}
+
 .btnCheckAll{
     box-shadow: 3px 0px 2px rgb(255 255 255 / 50%);
-    background: #305563;
+    background: transparent;
     border: none;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -98,6 +118,29 @@
     transition: all 0.3s ease-out;
     height: 32px;
     width: 130px;
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+}
+.btnCheckAll::before{
+  content: '';
+  position: absolute;
+  top:0;
+  left:0;
+  transform: translateX(-100%);
+  width:100%;
+  height:100%;
+  background: rgba(13, 81, 94, 0.63);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  transition: 0.5s ease;
+  z-index: -1;
+}
+.btnCheckAll:hover:before{
+ transform: translateX(0);
+}
+.btnCheckAll:hover{
+  color:#fff
 }
 .btnCheckAll:checked{
   background: #305563;
@@ -106,47 +149,21 @@
   background: none;
   cursor: no-drop;
 }
-
-.inputItem:focus{
-  box-shadow: 0px 0px 5px rgb(99, 138, 185) / 50%;
-}
-.inputItem:hover{
-  width: 450px !important;
-  background:#305563;
-  color: aliceblue;
-  transition: width 2.5s;
-}
-.inputItem:disabled{
-  width:250px !important;
-  background: rgba(221, 221, 221, 0.452);
-}
-.btnAdd:disabled{
-  transition: all 0.3s ease-out;
-  background:none;
-  cursor: no-drop;
-}
-.disabledBtn{
+.btnDeleteAll:disabled:before {
   background: none;
-  cursor: not-allowed;
-  box-shadow: 3px 0px 2px rgb(255 255 255 / 50%);
-  border: none;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  outline: none;
-  font-weight: 700;
-  font-size: 14px;
   cursor: no-drop;
-  transition: all 0.3s ease-out;
-  height: 32px;
 }
-.textarea {
-  width:100%;
-  background: transparent;
-  border:none;
-  box-shadow: 0px 0px 10px rgb(255 255 255 / 25%);
-  padding:5px 10px;
-  border-radius: 15px;
-  outline: none;
+.btnAddText:disabled:before {
+  background: none;
+  cursor:no-drop !important;
+}
+.btnAddText:disabled{
+  background:none;
+  cursor: no-drop !important;
+}
+.btnCheckAll:disabled:before {
+  background: none;
+  cursor: no-drop;
 }
 .vh{
   height:100vh;

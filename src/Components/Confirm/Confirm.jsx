@@ -4,7 +4,6 @@ import styles from './confirm.module.css'
 const Confirm = ({onHide,deleteCard,countOrCardTitle})=>{
     const deleteCurrentCard = () => {
             deleteCard();
-            onHide();
     }
     return (
         <div onHide={onHide} className={styles.confirm}>

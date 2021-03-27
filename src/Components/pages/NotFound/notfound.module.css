@@ -3,6 +3,11 @@
     flex-direction: column;
     height: 100vh;
 }
+.goBackPage{
+    position: fixed;
+    top:15px;
+    left:30px;
+}
 @media screen and (min-width:320px) and (max-width:992px) {
    .notFound h1{
         display: block;

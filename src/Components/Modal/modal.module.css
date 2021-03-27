@@ -5,7 +5,7 @@
     transform: translate(-50%, -50%);
     width:600px;
     height:500px;
-    background: linear-gradient(#283048,#693d6e,#283048);
+    background: linear-gradient(#283048,#85add2fa,#283048);
     box-shadow: 0px 0px 20px rgb(0 0 0 /50%);
     border-radius: 5px;
     transition:all 0.3s ease;
@@ -24,8 +24,8 @@
 }
 .btnSave button{
     background: none;
-    border:2px solid #305563;
-    color:#305563;
+    border:2px solid #1c263b;
+    color:#1c263b;
     padding:8px 15px;
     font-size: 15px;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
@@ -34,8 +34,7 @@
     margin: 0 5px;
 }
 .modalHolder button:hover{
-
-    background: #305563;
+    background: #1c263b;
     color:#fff;
     transition: all 0.5s ease;
 }
@@ -43,6 +42,7 @@
     margin-top: 2rem;
     box-shadow: 0px 0px 10px rgb(0 0 0 /20%);
     font-family:Verdana, Geneva, Tahoma, sans-serif;
+    color:#1c263b;
 }
 .closeModal{
     position: relative;
@@ -99,7 +99,7 @@
   width: 130px;
 }
 .inputHolder {
-display: flex;
+  display: flex;
   height: auto;
   box-shadow: 2px 2px 20px rgb(0 0 0 / 10%);
   padding:10px 15px;
@@ -135,20 +135,12 @@ display: flex;
   transition: all 1s ease-out;
   padding-top: 8px;
 }
-.inputItem:focus{
-  box-shadow: 0px 0px 5px rgb(99, 138, 185) / 50%;
-}
 .inputItem:hover{
   width: 450px !important;
   background:#305563;
-  color: aliceblue;
+  color:#fff;
   transition: width 2.5s;
 }
-.inputItem:disabled{
-  width:250px !important;
-  background: rgba(221, 221, 221, 0.452);
-}
-
 .textarea {
   width:100%;
   background: transparent;

@@ -28,6 +28,7 @@ import {NavLink} from 'react-router-dom';
              exact = {item.exact}
              onClick={toggleNavbar}
              className='nav-link' 
+             activeClassName={styles.activeMenuItem}
          >{item.name}</NavLink>
      })
     return (

@@ -189,7 +189,10 @@ h1{
    margin-top: 3rem !important;
  }
 }
-
+.modal-content {
+  background: #222;
+  color:#fff
+}
 
 
 

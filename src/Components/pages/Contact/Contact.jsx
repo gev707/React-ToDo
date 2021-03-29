@@ -2,7 +2,9 @@
 import { Form, Button } from 'react-bootstrap';
 import React, { PureComponent } from 'react';
 import styles from './contact.module.css';
-import ContactFormModal from './ContactFormModal'
+import ContactFormModal from './ContactFormModal';
+import Spinner from '../../Spinner/Spinner';
+
 const forms = [
     {
         name: 'name',
@@ -18,8 +20,8 @@ const forms = [
         name: 'message',
         type: null,
         placeholder: 'Your Message',
-        as :'textarea',
-        rows : 3,
+        as: 'textarea',
+        rows: 3,
     }
 ];
 const API_HOST = 'http://localhost:3001';
@@ -28,21 +30,21 @@ class Contact extends PureComponent {
         name: '',
         email: '',
         message: '',
-        loading:false,
-        isOpen:false
+        loading: false,
+        isOpen: false
     }
     toggleOpenContactModal = () => {
         this.setState({
-            isOpen:!this.state.isOpen
+            isOpen: !this.state.isOpen,
         })
     }
-    handleChange = ({target: {name,value}}) => {
+    handleChange = ({ target: { name, value } }) => {
         this.setState({
-            [name]:value
+            [name]: value
         })
     }
     handleSubmit = () => {
-        const formData ={...this.state};
+        const formData = { ...this.state };
         delete formData.loading;
         fetch(`${API_HOST}/form`, {
             method: 'POST',
@@ -51,21 +53,36 @@ class Contact extends PureComponent {
                 'Content-type': 'application/json'
             }
         })
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) throw data.error
-            this.setState({
-                formData:data,
-                isOpen:!this.state.isOpen
-            });
-        })
-        .catch(error => {
-            console.log(error);
-        })
-        
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) throw data.error
+                this.setState({
+                    isOpen: !this.state.isOpen,
+                });
+            })
+            .catch(error => {
+                console.log('send', error);
+            })
+    }
+    componentDidMount() {
+        this.setState({ loading: true })
+        fetch(`${API_HOST}/form`,)
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) throw data.error
+            })
+            .catch(error => {
+                console.log('catch', error);
+            })
+            .finally(() => {
+                this.setState({
+                    loading: false
+                })
+            })
     }
     render() {
-        const {isOpen} = this.state;
+
+        const { name, email, message, isOpen, loading } = this.state;
         const formGroup = forms.map((form, index) => {
             return (
                 <Form.Group
@@ -83,7 +100,8 @@ class Contact extends PureComponent {
                     />
                 </Form.Group>
             )
-        })
+        });
+
         return (
             <div className={styles.formHolder}>
                 <h1 className={styles.title}>Contact Section</h1>
@@ -95,19 +113,28 @@ class Contact extends PureComponent {
                         <h2>Send Your Message</h2>
                         {formGroup}
 
-                        <Button 
-                            className={styles.formGroupBtn} 
-                            variant="primary" 
+                        <Button
+                            className={styles.formGroupBtn}
+                            variant="primary"
                             type="submit"
                             onClick={this.handleSubmit}
-                            >
+                        >
                             Send
                         </Button>
                     </Form>
                 </div>
                 {
-                    isOpen && <ContactFormModal  onHide={this.toggleOpenContactModal}/>
+                    isOpen && <ContactFormModal
+                        onHide={this.toggleOpenContactModal}
+                        name={name}
+                        email={email}
+                        message={message}
+                    />
                 }
+                {
+                    loading && <Spinner />
+                }
+
             </div>
         )
     }

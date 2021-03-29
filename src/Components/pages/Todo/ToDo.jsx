@@ -14,8 +14,8 @@ class Todo extends React.Component {
         isOpenModal: false,
         isOpenConfirm: false,
         editCard: null,
-        loading:false,
-    }; 
+        loading: false,
+    };
 
     /** 
      * toggle functions 
@@ -72,7 +72,7 @@ class Todo extends React.Component {
     */
 
     addCard = (formData) => {
-        this.setState({loading:true})
+        this.setState({ loading: true })
         fetch(`${API_HOST}/task`, {
             method: 'POST',
             body: JSON.stringify(formData),
@@ -80,27 +80,27 @@ class Todo extends React.Component {
                 'Content-type': 'application/json'
             }
         })
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) throw data.error
-            const cards = [...this.state.cards];
-            cards.push(data)
-            this.setState({
-                cards,
-                isOpenModal:!this.state.isOpenModal
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) throw data.error
+                const cards = [...this.state.cards];
+                cards.push(data)
+                this.setState({
+                    cards,
+                    isOpenModal: !this.state.isOpenModal
 
+                })
             })
-        })
-        .catch(error => {
-            console.log(error)
-        })
-        .finally(()=>{
-            this.setState({loading:false})
-        })
+            .catch(error => {
+                console.log(error)
+            })
+            .finally(() => {
+                this.setState({ loading: false })
+            })
     };
 
     handleEditCard = (editCard) => {
-        this.setState({loading:true})
+        this.setState({ loading: true })
         fetch(`${API_HOST}/task/${editCard._id}`, {
             method: 'PUT',
             body: JSON.stringify(editCard),
@@ -108,23 +108,23 @@ class Todo extends React.Component {
                 'Content-Type': 'application/json'
             }
         })
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) throw data.error;
-            const cards = [...this.state.cards];
-            const index = cards.findIndex(card => card._id === editCard._id)
-            cards[index] = editCard;
-            this.setState({
-                cards,
-                editCard:null
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) throw data.error;
+                const cards = [...this.state.cards];
+                const index = cards.findIndex(card => card._id === editCard._id)
+                cards[index] = editCard;
+                this.setState({
+                    cards,
+                    editCard: null
+                })
             })
-        })
-        .catch(error => {
-            console.log('Catch Error', error)
-        })
-        .finally(()=>{
-            this.setState({loading:false})
-        })
+            .catch(error => {
+                console.log('Catch Error', error)
+            })
+            .finally(() => {
+                this.setState({ loading: false })
+            })
     }
 
     /**
@@ -132,7 +132,7 @@ class Todo extends React.Component {
      */
 
     deleteCard = (id) => {
-        this.setState({loading:true});
+        this.setState({ loading: true });
         fetch(`${API_HOST}/task/${id}`, {
             method: 'DELETE',
         })
@@ -148,15 +148,15 @@ class Todo extends React.Component {
             .catch(error => {
                 console.log('Catch Error', error)
             })
-            .finally(()=>{
+            .finally(() => {
                 this.setState({
-                    loading:false
+                    loading: false
                 })
             })
     }
 
     deleteCheckedCard = () => {
-        this.setState({loading:true});
+        this.setState({ loading: true });
         const { checkedCards } = this.state;
         fetch(`${API_HOST}/task`, {
             method: 'PATCH',
@@ -165,27 +165,27 @@ class Todo extends React.Component {
                 'Content-Type': 'application/json'
             }
         })
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) throw data.error;
-            let cards = this.state.cards;
-            cards = cards.filter(card => !checkedCards.has(card._id));
-            this.setState({
-                cards,
-                checkedCards: new Set(),
-                isOpenConfirm:!this.state.isOpenConfirm
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) throw data.error;
+                let cards = this.state.cards;
+                cards = cards.filter(card => !checkedCards.has(card._id));
+                this.setState({
+                    cards,
+                    checkedCards: new Set(),
+                    isOpenConfirm: !this.state.isOpenConfirm
+                })
             })
-        })
-        .catch(error => {
-            console.log('Catch Error', error)
-        })
-        .finally(()=>{
-            this.setState({
-                loading:false
+            .catch(error => {
+                console.log('Catch Error', error)
             })
-        })
+            .finally(() => {
+                this.setState({
+                    loading: false
+                })
+            })
     }
-    
+
     getSingleCardFromCheckedCards = () => {
         if (this.state.checkedCards.size !== 1) {
             return
@@ -199,7 +199,7 @@ class Todo extends React.Component {
     };
 
     componentDidMount() {
-        this.setState({loading:true});
+        this.setState({ loading: true });
         fetch(`${API_HOST}/task`,)
             .then(res => res.json())
             .then(data => {
@@ -211,14 +211,14 @@ class Todo extends React.Component {
             .catch(error => {
                 console.log(error)
             })
-            .finally(()=>{
+            .finally(() => {
                 this.setState({
-                    loading:false
+                    loading: false
                 })
             })
     }
     render() {
-        const { cards, checkedCards, isOpenModal, isOpenConfirm, editCard,loading } = this.state;
+        const { cards, checkedCards, isOpenModal, isOpenConfirm, editCard, loading } = this.state;
         const card = cards.map(card => {
             return <Task
                 card={card}

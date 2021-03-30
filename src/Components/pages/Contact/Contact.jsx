@@ -64,22 +64,7 @@ class Contact extends PureComponent {
                 console.log('send', error);
             })
     }
-    componentDidMount() {
-        this.setState({ loading: true })
-        fetch(`${API_HOST}/form`,)
-            .then(res => res.json())
-            .then(data => {
-                if (data.error) throw data.error
-            })
-            .catch(error => {
-                console.log('catch', error);
-            })
-            .finally(() => {
-                this.setState({
-                    loading: false
-                })
-            })
-    }
+   
     render() {
 
         const { name, email, message, isOpen, loading } = this.state;

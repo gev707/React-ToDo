@@ -4,6 +4,9 @@ import React, { PureComponent } from 'react';
 import styles from './contact.module.css';
 import ContactFormModal from './ContactFormModal';
 import Spinner from '../../Spinner/Spinner';
+import { isRequired, maxLength ,minLength,validateEmail} from '../../helpers/validators';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle, faCheckCircle,faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 const forms = [
     {
@@ -25,13 +28,29 @@ const forms = [
     }
 ];
 const API_HOST = 'http://localhost:3001';
+const maxLength30 = maxLength(30)
+const minLength3 = minLength(3)
+
 class Contact extends PureComponent {
     state = {
-        name: '',
-        email: '',
-        message: '',
+        name: {
+            valid: false,
+            error: false,
+            value: ''
+        },
+        email: {
+            valid: false,
+            error: false,
+            value: ''
+        },
+        message: {
+            valid: false,
+            error: false,
+            value: ''
+        },
         loading: false,
-        isOpen: false
+        isOpen: false,
+        infoErrorMessage:''
     }
     toggleOpenContactModal = () => {
         this.setState({
@@ -39,13 +58,39 @@ class Contact extends PureComponent {
         })
     }
     handleChange = ({ target: { name, value } }) => {
+        let valid = true;
+        let error = undefined;
+        error = isRequired(value) || 
+            (name === 'name' ? maxLength30(value): undefined) ||
+            (name === 'name' || name === 'message' ? minLength3(value): undefined) || 
+            (name === 'email' && validateEmail(value)) 
+
+        if (error) valid = false
         this.setState({
-            [name]: value
+            [name]: {
+                valid: valid,
+                error: error,
+                value: value
+            }
         })
     }
     handleSubmit = () => {
         const formData = { ...this.state };
         delete formData.loading;
+        for (let key in formData) {
+            
+            if (typeof formData[key] === 'object' && formData[key].hasOwnProperty('value'))
+                formData[key] = formData[key].value;
+            else delete formData[key].value
+        }
+
+        if (!formData.name.trim() || 
+            !formData.email.trim() || 
+            !formData.message.trim()) return;
+        this.setState({ 
+            loading: true ,
+            infoErrorMessage:''
+        })
         fetch(`${API_HOST}/form`, {
             method: 'POST',
             body: JSON.stringify(formData),
@@ -56,37 +101,69 @@ class Contact extends PureComponent {
             .then(res => res.json())
             .then(data => {
                 if (data.error) throw data.error
-                this.setState({
-                    isOpen: !this.state.isOpen,
-                });
+                this.props.history.push('/')
             })
             .catch(error => {
+                this.setState({ 
+                    loading: false,
+                    infoErrorMessage:error.message.slice(6) 
+                })
                 console.log('send', error);
             })
     }
-   
+
     render() {
 
-        const { name, email, message, isOpen, loading } = this.state;
+        const { name, email, message, isOpen, loading} = this.state;
         const formGroup = forms.map((form, index) => {
+            const errorMessage = this.state[form.name].error;
+            const inputValue = this.state[form.name].value;
             return (
-                <Form.Group
-                    className={styles.formGroup}
-                    key={index}
-                >
-                    <Form.Control
-                        type={form.name}
-                        placeholder={form.placeholder}
-                        name={form.name}
-                        value={this.state[form.name]}
-                        onChange={this.handleChange}
-                        as={form.as || undefined}
-                        rows={form.rows || undefined}
-                    />
-                </Form.Group>
+                    <Form.Group
+                        className={styles.formGroup}
+                        key={index}
+                    >
+                        <Form.Control
+                            type={form.name}
+                            placeholder={form.placeholder}
+                            name={form.name}
+                            value={inputValue}
+                            onChange={this.handleChange}
+                            as={form.as || undefined}
+                            rows={form.rows || undefined}
+                        />
+                        <div>{inputValue === '' && !errorMessage ?
+                            null : errorMessage ?
+                                <div className={styles.tooltips}>
+
+                                    <FontAwesomeIcon
+                                        className={styles.errorIcon}
+                                        icon={faExclamationTriangle}
+                                    />
+                                    <div className={styles.errorTooltips}>
+                                        {errorMessage}
+                                        <FontAwesomeIcon
+                                            className={styles.caret}
+                                            icon={faCaretDown}
+                                        />
+                                    </div>
+                                </div>
+                                :
+                                <div>
+                                    <FontAwesomeIcon
+                                        className={styles.validIcon}
+                                        icon={faCheckCircle}
+                                        style={{ color: 'green' }}
+                                    />
+                                </div>
+
+                            }
+                        </div>
+                    </Form.Group>
+                
             )
         });
-
+        
         return (
             <div className={styles.formHolder}>
                 <h1 className={styles.title}>Contact Section</h1>
@@ -96,16 +173,20 @@ class Contact extends PureComponent {
                         className={styles.formBody}
                     >
                         <h2>Send Your Message</h2>
+                        <small 
+                            style={{textTransform : 'capitalize', color : 'red'}}>
+                            {this.state.infoErrorMessage}
+                        </small>
                         {formGroup}
-
                         <Button
                             className={styles.formGroupBtn}
                             variant="primary"
                             type="submit"
                             onClick={this.handleSubmit}
+                            disabled={!name.valid || !email.valid || !message.valid}
                         >
                             Send
-                        </Button>
+                    </Button>
                     </Form>
                 </div>
                 {

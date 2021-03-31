@@ -13,7 +13,7 @@
 .formBody {
     width:500px;
     height:auto;
-    background: #fff;
+    background: #ddd;
     box-shadow: 5px -4px 5px rgb(0 0 0 /10%);
     transform:perspective(600px) rotateY(-10deg);
     -webkit-box-reflect:below 2px  linear-gradient(transparent,transparent,#0003);
@@ -25,8 +25,11 @@
     -webkit-box-reflect:below 2px linear-gradient(transparent,transparent,#0004);
 }
 .formGroup{
-    margin:1rem !important;
+    margin:2rem 1rem !important;
+    position: relative;
+    outline: none;
 }
+
 .formGroupBtn {
     margin: 1rem;
 }
@@ -38,10 +41,65 @@
 }
 .contactModal {
     position: absolute;
-    width:500px;
-    height:300px;
+    width:700px;
+    height:500px;
     top:15px;
     left:50%;
     transform: translateX(-50%);
     z-index: 11111;
+}
+.formGroup input{
+    padding-right: 40px;
+}
+.tooltips {
+    position: absolute;
+    right: 0px;
+    top: 12px;
+    color: red;
+    font-family: monospace;
+}
+.errorTooltips{
+    position: absolute;
+    white-space: nowrap;
+    background: rgba(167, 7, 7, 0.829);
+    color:#fff;
+    padding:0 5px;
+    transition: 0.2s ease;
+    animation: show 4s;
+    opacity: 0;
+    right: -50%;
+    top: -40px;
+}
+.caret{
+    position: absolute;
+    color: rgba(167, 7, 7, 0.829);
+    top:10px;
+    right:50%;
+    transform: translateX(10px);
+    font-size: 22px;
+}
+.tooltips:hover .errorTooltips{
+    opacity: 1;
+}
+.errorIcon {
+    position: absolute;
+    right:10px;
+    top:0px
+}
+.validIcon {
+    position: absolute;
+    right:10px;
+    top:10px
+}
+
+@keyframes show {
+    0%{
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
 }

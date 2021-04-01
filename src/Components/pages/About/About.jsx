@@ -61,7 +61,7 @@ const About = (props) => {
                             <Dropdown.Item href="#/action-1">
                                 <Button 
                                     variant='info' 
-                                    onClick = {()=>props.history.push('/contact')}
+                                    onClick = {()=>props.history.push('/')}
                                     >To Home
                                 </Button>
                             </Dropdown.Item>

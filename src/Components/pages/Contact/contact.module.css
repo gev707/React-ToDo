@@ -2,6 +2,21 @@
     width:100vw;
     height: 100vh;
     position: relative;
+    background: linear-gradient(#0003 ,#0007);
+}
+.contactMainPage {
+    width:100vw;
+    height:100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contactMainPage h2:hover{
+    transition:all 0.5s ease;
+    background: #0003;
+}
+.contactMainPage h2 a{
+   text-decoration: none;
 }
 .formWrapper{
     width: 100%;
@@ -16,10 +31,24 @@
     background: #ddd;
     box-shadow: 5px -4px 5px rgb(0 0 0 /10%);
     transform:perspective(600px) rotateY(-10deg);
-    -webkit-box-reflect:below 2px  linear-gradient(transparent,transparent,#0003);
+    -webkit-box-reflect:below 2px  linear-gradient(transparent,transparent,#0005);
+    transition: 0.5s ease;
+}
+.formHookBody {
+    width:500px;
+    height:auto;
+    background: rgb(148, 168, 168);
+    box-shadow: 5px -4px 5px rgb(0 0 0 /10%);
+    transform:perspective(600px) rotateY(-10deg);
+    -webkit-box-reflect:below 2px  linear-gradient(transparent,transparent,#0005);
     transition: 0.5s ease;
 }
 .formBody:hover {
+    box-shadow: 5px -4px 10px rgb(255 255 255 /12%);
+    transform:perspective(600px) rotateY(0deg);
+    -webkit-box-reflect:below 2px linear-gradient(transparent,transparent,#0004);
+}
+.formHookBody:hover {
     box-shadow: 5px -4px 10px rgb(255 255 255 /12%);
     transform:perspective(600px) rotateY(0deg);
     -webkit-box-reflect:below 2px linear-gradient(transparent,transparent,#0004);
@@ -32,12 +61,25 @@
 
 .formGroupBtn {
     margin: 1rem;
+    background: none !important;
+    color:#225a6e !important;
+    border:2px solid #225a6e !important;
+    font-weight: bold !important;
+    transition: all 0.5s ease;
+}
+.formGroupBtn:hover {
+    margin: 1rem;
+    background: #225a6e !important;
+    color:#fff !important;
+    font-weight: bold;
+    opacity: 1 !important;
 }
 .title{
     position: absolute;
     top:15px;
     left:50%;
     transform: translateX(-50%);
+    white-space: nowrap;
 }
 .contactModal {
     position: absolute;

@@ -3,7 +3,9 @@ import Navbar from './Components/Navbar/Navbar';
 //pages
 import ToDo from './Components/pages/Todo/ToDo';
 import About from './Components/pages/About/About';
-import Contact from './Components/pages/Contact/Contact';
+import ContactWithClass from './Components/pages/Contact/ContactWithClass';
+import ContactWithHook from './Components/pages/Contact/ContactWithHook';
+import Contact from './Components/pages/Contact/Contact'
 import NotFound from './Components/pages/NotFound/NotFound';
 import SingleCard from './Components/pages/SingleCard/SingleCard'
 
@@ -26,6 +28,16 @@ const router = [
   {
     component: Contact,
     path: '/contact',
+    exact: true
+  },
+  {
+    component: ContactWithHook,
+    path: '/contactformhook',
+    exact: true
+  },
+  {
+    component: ContactWithClass,
+    path: '/contactformclass',
     exact: true
   },
   {

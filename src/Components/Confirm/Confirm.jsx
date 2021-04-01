@@ -7,12 +7,20 @@ const Confirm = ({onHide,deleteCard,countOrCardTitle})=>{
     }
     return (
         <div onHide={onHide} className={styles.confirm}>
-            <h2>{countOrCardTitle !==0? 'Are you sure!':'Please check some card!'}</h2>
-            <small>{countOrCardTitle !==0?`Do you want delete ( ${countOrCardTitle} ) from Cards?`:'There are no card to delete'}</small>
+            <h2>{countOrCardTitle !== 0 ? 'Are you sure!':'Please check some card!'}</h2>
+            <small>{countOrCardTitle !== 0 ? 
+                `Do you want delete ( ${countOrCardTitle} ) from Cards?`:
+                'There are no card to delete'}
+            </small>
             <hr />
             <div className='p-3'>
             <button onClick={onHide} className={styles.closeConfirm}>Cancel</button>
-            <button onClick={deleteCurrentCard} className={styles.btnDelete}>Delete Card</button> 
+            <button 
+                onClick={deleteCurrentCard} 
+                className={styles.btnDelete}
+                disabled={countOrCardTitle===0}
+            >Delete Card
+            </button> 
             </div>
         </div>
     )

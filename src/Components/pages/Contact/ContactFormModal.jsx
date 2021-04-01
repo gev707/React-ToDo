@@ -13,9 +13,9 @@ const ContactFormModal = ({ onHide,name,email,message}) => {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <p>Name -  {name}</p>
-                    <p>Email -  {email}</p>
-                    <p>Message -  {message}</p>
+                    <p>Name is -  {name}</p>
+                    <p>Email is -  {email}</p>
+                    <p>Message is -  {message}</p>
                 </Modal.Body>
 
                 <Modal.Footer>

@@ -28,6 +28,7 @@ const forms = [
     }
 ];
 const API_HOST = 'http://localhost:3001';
+
 const maxLength30 = maxLength(30)
 const minLength3 = minLength(3)
 
@@ -59,13 +60,14 @@ class Contact extends PureComponent {
     }
     handleChange = ({ target: { name, value } }) => {
         let valid = true;
-        let error = undefined;
+        let error = null;
         error = isRequired(value) || 
-            (name === 'name' ? maxLength30(value): undefined) ||
-            (name === 'name' || name === 'message' ? minLength3(value): undefined) || 
+            (name === 'name' ? maxLength30(value): null) ||
+            (name === 'name' || name === 'message' ? minLength3(value): null) || 
             (name === 'email' && validateEmail(value)) 
 
         if (error) valid = false
+
         this.setState({
             [name]: {
                 valid: valid,
@@ -78,12 +80,16 @@ class Contact extends PureComponent {
         const formData = { ...this.state };
         delete formData.loading;
         for (let key in formData) {
-            
-            if (typeof formData[key] === 'object' && formData[key].hasOwnProperty('value'))
+            if (typeof formData[key] === 'object' && formData[key].hasOwnProperty('value')) {
                 formData[key] = formData[key].value;
-            else delete formData[key].value
+            }
+               
+            else {
+                delete formData[key].value
+                
+            }
         }
-
+        
         if (!formData.name.trim() || 
             !formData.email.trim() || 
             !formData.message.trim()) return;
@@ -101,7 +107,11 @@ class Contact extends PureComponent {
             .then(res => res.json())
             .then(data => {
                 if (data.error) throw data.error
-                this.props.history.push('/')
+                console.log(formData)
+                   this.setState({
+                        loading:false,
+                        isOpen:!this.state.isOpen
+                   })
             })
             .catch(error => {
                 this.setState({ 
@@ -116,8 +126,8 @@ class Contact extends PureComponent {
 
         const { name, email, message, isOpen, loading} = this.state;
         const formGroup = forms.map((form, index) => {
-            const errorMessage = this.state[form.name].error;
-            const inputValue = this.state[form.name].value;
+        const errorMessage = this.state[form.name].error;
+        const inputValue = this.state[form.name].value;
             return (
                     <Form.Group
                         className={styles.formGroup}
@@ -135,7 +145,6 @@ class Contact extends PureComponent {
                         <div>{inputValue === '' && !errorMessage ?
                             null : errorMessage ?
                                 <div className={styles.tooltips}>
-
                                     <FontAwesomeIcon
                                         className={styles.errorIcon}
                                         icon={faExclamationTriangle}
@@ -156,7 +165,6 @@ class Contact extends PureComponent {
                                         style={{ color: 'green' }}
                                     />
                                 </div>
-
                             }
                         </div>
                     </Form.Group>
@@ -192,9 +200,9 @@ class Contact extends PureComponent {
                 {
                     isOpen && <ContactFormModal
                         onHide={this.toggleOpenContactModal}
-                        name={name}
-                        email={email}
-                        message={message}
+                        name={name.value}
+                        email={email.value}
+                        message={message.value}
                     />
                 }
                 {

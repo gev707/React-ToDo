@@ -16,7 +16,6 @@ const SinglePageProvider = props => {
     });
     useEffect(() => {
         const id = match.params.id;
-        const fetchBusinesses = () =>{
             fetch(`${API_HOST}/task/${id}`,)
             .then(res => res.json())
             .then(data => {
@@ -27,8 +26,8 @@ const SinglePageProvider = props => {
                 history.push({ pathname: '/404', state: 'isCardId' });
                 console.log(error)
             })
-        }
-        fetchBusinesses() 
+        
+      
     }, []);
     const toggleEditModal = () => {
         setEditModal({

@@ -1,15 +1,12 @@
 import React from 'react';
-import styles from './contact.module.css'
+import styles from '../contact.module.css'
 import { Form ,Button } from 'react-bootstrap';
 import {useState} from 'react';
-import Spinner from '../../Spinner/Spinner';
+import Spinner from '../../../Spinner/Spinner';
 import ContactFormModal from './ContactFormModal'
-import { isRequired, maxLength ,minLength,validateEmail} from '../../helpers/validators';
+import { isRequired, maxLength ,minLength,validateEmail} from '../../../helpers/validators';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle, faCheckCircle,faCaretDown } from '@fortawesome/free-solid-svg-icons';
-
-
-
 const ContactWithHook = (props) => {
     const forms = [
         {
@@ -114,17 +111,6 @@ const ContactWithHook = (props) => {
                 setContactModal({
                     isOpen: !contactModal.isOpen
                 })
-            })
-            .catch(error => {
-                setErrorMessage({
-                    errorMessage:error.message.slice(6)
-                })
-                console.log('send', error);
-            })
-            .finally(()=>{
-                setSpinner({ 
-                    loading: false,
-                })
                 setValues({
                     ...values,
                     name:{
@@ -143,13 +129,22 @@ const ContactWithHook = (props) => {
                         value:''
                     }
                 })
-                
+            })
+            .catch(error => {
+                setErrorMessage({
+                    errorMessage:error.message.slice(6)
+                })
+                console.log('send', error);
+            })
+            .finally(()=>{
+                setSpinner({ 
+                    loading: false,
+                }) 
             })
     }
     const formGroup = forms.map((form, index) => {
         const inputValue = values[form.name].value
         const errorMessage = values[form.name].error
-        console.log(inputValue,errorMessage)
             return (
                     <Form.Group
                         className={styles.formGroup}

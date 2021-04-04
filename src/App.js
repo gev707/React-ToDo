@@ -3,18 +3,27 @@ import Navbar from './Components/Navbar/Navbar';
 //pages
 import ToDo from './Components/pages/Todo/ToDo';
 import About from './Components/pages/About/About';
-import ContactWithClass from './Components/pages/Contact/ContactWithClass';
-import ContactWithHook from './Components/pages/Contact/ContactWithHook';
+import ContactWithClass from './Components/pages/Contact/Contacts/ContactWithClass';
+import ContactWithHook from './Components/pages/Contact/Contacts/ContactWithHook';
+import ContactPage from './Components/pages/Contact/ContactPage'
 import Contact from './Components/pages/Contact/Contact'
 import NotFound from './Components/pages/NotFound/NotFound';
-import SingleCard from './Components/pages/SingleCard/SingleCard'
-
+import SingleCard from './Components/pages/SingleCard/SingleCard';
+//
+import SinglePageProvider from  './Context/providers/SinglePageProvider'
 //
 import { Route, Switch, Redirect } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+
+
 const router = [
+  {
+    component: Contact,
+    path: '/contact',
+    exact: true
+  },
   {
     component: ToDo,
     path: '/',
@@ -25,14 +34,15 @@ const router = [
     path: '/about',
     exact: true
   },
-  {
-    component: Contact,
-    path: '/contact',
-    exact: true
-  },
+  
   {
     component: ContactWithHook,
     path: '/contactformhook',
+    exact: true
+  },
+  {
+    component: ContactPage,
+    path: '/contactpage',
     exact: true
   },
   {
@@ -40,6 +50,7 @@ const router = [
     path: '/contactformclass',
     exact: true
   },
+ 
   {
     component: NotFound,
     path: '/404',
@@ -50,6 +61,7 @@ const router = [
     path: '/card/:id',
     exact: true
   },
+ 
 ];
 class App extends React.Component {
   state = {
@@ -62,7 +74,23 @@ class App extends React.Component {
     })
   }
   render() {
-    const routerPages = router.map((item, index) => {
+    const rout = router.map((item, index) => {
+     if(index === 7 ){
+       return(
+        <Route
+        key={index}
+        path={item.path}
+        render={(props)=>
+          {
+            <SinglePageProvider>
+              <item.component {...props}/>
+            </SinglePageProvider>
+          }
+        }
+        exact={item.exact}
+      />
+       )
+     }
       return (
         <Route
           key={index}
@@ -86,11 +114,10 @@ class App extends React.Component {
           />
         }
         <Switch>
-          {routerPages}
+          {rout}
           <Redirect  to='/404' ></Redirect>
         </Switch>
-
-
+       
       </div>
     )
   }

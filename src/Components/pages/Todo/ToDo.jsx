@@ -5,6 +5,7 @@ import Confirm from '../../Confirm/Confirm';
 import styles from "./todo.module.css";
 import Spinner from "../../Spinner/Spinner";
 
+
 const API_HOST = 'http://localhost:3001';
 
 class Todo extends React.Component {
@@ -15,6 +16,7 @@ class Todo extends React.Component {
         isOpenConfirm: false,
         editCard: null,
         loading: false,
+       
     };
 
     /** 
@@ -31,6 +33,7 @@ class Todo extends React.Component {
             editCard
         })
     }
+    
     toggleOpenModal = () => {
         const { isOpenModal } = this.state
         this.setState({
@@ -218,7 +221,7 @@ class Todo extends React.Component {
             })
     }
     render() {
-        const { cards, checkedCards, isOpenModal, isOpenConfirm, editCard, loading } = this.state;
+        const { cards, checkedCards, isOpenModal, isOpenConfirm, editCard, loading} = this.state;
         const card = cards.map(card => {
             return <Task
                 card={card}
@@ -229,6 +232,7 @@ class Todo extends React.Component {
                 isChecked={checkedCards.has(card._id)}
                 toggleOpenModal={this.toggleOpenModal}
                 setEditableCard={this.toggleSetCardModal}
+                
             />
         });
         return (
@@ -291,7 +295,7 @@ class Todo extends React.Component {
                 {
                     loading && <Spinner />
                 }
-
+               
             </section>
         )
     }

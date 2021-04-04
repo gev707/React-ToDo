@@ -1,7 +1,6 @@
 import { Modal, Button } from 'react-bootstrap'
-import styles from './contact.module.css'
+import styles from '../contact.module.css'
 const ContactFormModal = ({ onHide,name,email,message}) => {
-    
     const handleClose = () => {
         onHide()
     }

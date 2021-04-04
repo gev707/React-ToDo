@@ -1,9 +1,9 @@
 import { Form, Button } from 'react-bootstrap';
 import React, { PureComponent } from 'react';
-import styles from './contact.module.css';
+import styles from '../contact.module.css';
 import ContactFormModal from './ContactFormModal';
-import Spinner from '../../Spinner/Spinner';
-import { isRequired, maxLength ,minLength,validateEmail} from '../../helpers/validators';
+import Spinner from '../../../Spinner/Spinner';
+import { isRequired, maxLength ,minLength,validateEmail} from '../../../helpers/validators';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle, faCheckCircle,faCaretDown } from '@fortawesome/free-solid-svg-icons';
 

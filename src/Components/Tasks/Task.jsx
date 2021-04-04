@@ -7,12 +7,14 @@ import {Link} from 'react-router-dom'
 import {withRouter} from  'react-router-dom'
 import { memo } from 'react';
 
+
 const Task = ({ 
     card, 
     handleToggleCheckCards,
     deleteCard, 
     isChecked,
     setEditableCard,
+  
 }) => {
     return (
         <div className={!isChecked ? styles.taskHolder : styles.tasks}>
@@ -23,6 +25,7 @@ const Task = ({
                 checked={isChecked}
             />
             <div className={styles.taskFlex}>
+               
                 <Link  to={'/card/' + card._id}><p>{card.title}</p></Link>
                 <p className={styles.description}>- Description - <br />{card.description}</p>
                 <p>Date: {card.date.slice(0,10)}</p>

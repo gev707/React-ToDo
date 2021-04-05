@@ -24,7 +24,7 @@ const SingleCard = (props) => {
         
             <contextForSingleCard.Consumer>
                  {
-                    function (contextCard) {
+                     (contextCard)=> {
                         if (!singleCard.singleCard) return spinner.loading && <Spinner />
                         return (
                             <>

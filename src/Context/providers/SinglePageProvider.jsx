@@ -4,7 +4,8 @@ import { contextForSingleCard } from '../context';
 const API_HOST = 'http://localhost:3001';
 
 const SinglePageProvider = props => {
-    const{children,history,match} = props
+    
+    const { children, history, match } = props
     const [singleCard, setSingleCard] = useState({
         singleCard: null
     })
@@ -16,18 +17,18 @@ const SinglePageProvider = props => {
     });
     useEffect(() => {
         const id = match.params.id;
-            fetch(`${API_HOST}/task/${id}`,)
+        fetch(`${API_HOST}/task/${id}`)
             .then(res => res.json())
             .then(data => {
                 if (data.error) throw data.error
-                setSingleCard({ singleCard: data })
+                setSingleCard({
+                    singleCard:data
+                })
             })
             .catch(error => {
                 history.push({ pathname: '/404', state: 'isCardId' });
                 console.log(error)
             })
-        
-      
     }, []);
     const toggleEditModal = () => {
         setEditModal({
@@ -80,9 +81,6 @@ const SinglePageProvider = props => {
                 setSpinner({ loading: false });
             })
     }
-
-    
-   
     return (
         <contextForSingleCard.Provider value={{
             singleCard,

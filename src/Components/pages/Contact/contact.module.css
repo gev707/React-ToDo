@@ -159,3 +159,37 @@
         opacity: 0;
     }
 }
+@media screen and (min-width:300px) and (max-width:767px) {
+    .contactMainPage {
+      
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .title {
+        position: absolute;
+        top: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        font-size: 22px;
+    }
+    .formBody{
+        width:90%;
+        margin:  auto;
+    }
+    .formHookBody{
+        width:90%;
+        margin:  auto;
+    }
+    .formContextBody{
+        width:90%;
+        margin:  auto;
+    }
+    .contactModal {
+       
+        width:100%;
+       
+    }
+}

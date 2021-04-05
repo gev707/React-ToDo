@@ -197,10 +197,7 @@ textarea.form-control {
    margin-top: 3rem !important;
  }
 }
-.modal-content {
-  background: #222;
-  color:#fff
-}
+
 .modal-title {
   margin-bottom: 0;
   line-height: 1.5;

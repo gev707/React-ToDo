@@ -10,7 +10,7 @@ import Contact from './Components/pages/Contact/Contact'
 import NotFound from './Components/pages/NotFound/NotFound';
 import SingleCard from './Components/pages/SingleCard/SingleCard';
 //
-import SinglePageProvider from  './Context/providers/SinglePageProvider'
+import SinglePageProvider from './Context/providers/SinglePageProvider'
 //
 import { Route, Switch, Redirect } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -34,7 +34,7 @@ const router = [
     path: '/about',
     exact: true
   },
-  
+
   {
     component: ContactWithHook,
     path: '/contactformhook',
@@ -50,7 +50,7 @@ const router = [
     path: '/contactformclass',
     exact: true
   },
- 
+
   {
     component: NotFound,
     path: '/404',
@@ -61,7 +61,7 @@ const router = [
     path: '/card/:id',
     exact: true
   },
- 
+
 ];
 class App extends React.Component {
   state = {
@@ -75,22 +75,23 @@ class App extends React.Component {
   }
   render() {
     const rout = router.map((item, index) => {
-     if(index === 7 ){
-       return(
-        <Route
-        key={index}
-        path={item.path}
-        render={(props)=>
-          {
-            <SinglePageProvider>
-              <item.component {...props}/>
-            </SinglePageProvider>
-          }
-        }
-        exact={item.exact}
-      />
-       )
-     }
+      if (item.path === '/card/:id') {
+        return (
+          <Route
+            key={index}
+            path={item.path}
+            render={(props) => (
+
+              <SinglePageProvider {...props}>
+                <item.component {...props} />
+              </SinglePageProvider>
+            )
+
+            }
+            exact={item.exact}
+          />
+        )
+      }
       return (
         <Route
           key={index}
@@ -101,13 +102,13 @@ class App extends React.Component {
 
       )
     })
-    const { isOpen} = this.state;
+    const { isOpen } = this.state;
     return (
       <div className={isOpen ? 'App vh' : 'App'}>
         <div onClick={this.toggleNavbar} className='openNav'>
           <span className={!isOpen ? 'toggleSpan' : 'activeSpan'}></span>
         </div>
-        
+
         {
           isOpen && <Navbar
             toggleNavbar={this.toggleNavbar}
@@ -115,9 +116,9 @@ class App extends React.Component {
         }
         <Switch>
           {rout}
-          <Redirect  to='/404' ></Redirect>
+          <Redirect to='/404' ></Redirect>
         </Switch>
-       
+
       </div>
     )
   }

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { PureComponent, createRef } from "react";
+import React, { PureComponent} from "react";
 import dateFormat from '../helpers/dateFormatter'
 import DatePicker from "react-datepicker";
 import styles from "./modal.module.css";
@@ -7,7 +7,6 @@ import styles from "./modal.module.css";
 class Modal extends PureComponent {
     constructor(props) {
         super(props);
-        this.inputRef = createRef();
         this.state = {
             title: '',
             description: '',
@@ -37,9 +36,7 @@ class Modal extends PureComponent {
             date
         })
     }
-    componentDidMount() {
-        this.inputRef.current.focus();
-    }
+    
 
     render(){
         const {onHide,editCard} = this.props;

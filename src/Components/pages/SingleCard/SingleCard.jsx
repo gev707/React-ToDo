@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import styles from './singlecard.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faAddressCard } from '@fortawesome/free-solid-svg-icons';
@@ -11,67 +11,73 @@ const SingleCard = (props) => {
     const contextCard = useContext(contextForSingleCard)
     const {
         singleCard,
-        editModal,
-        spinner,
+        isEditModal,
+        loading,
         //
         handleEditCard,
         deleteSingleCard,
-        toggleEditModal
+        toggleEditModal,
+        //setSingleCard,
+        //setLoading,
+        getSingleCard
 
     } = contextCard;
+    useEffect(() => {
+        getSingleCard();
+    }, [getSingleCard])
     return (
-        
-        
-            <contextForSingleCard.Consumer>
-                 {
-                     (contextCard)=> {
-                        if (!singleCard.singleCard) return spinner.loading && <Spinner />
-                        return (
-                            <>
-                                <div className={styles.singleCardHolder}>
-                                    <div className={styles.goBackPage}>
-                                        <Button
-                                            variant='dark'
-                                            style={{ color: '#ddd' }}
-                                            onClick={() => props.history.goBack()}
-                                            >Go Back
-                                        </Button>
-                                    </div>
-                                    <div className={styles.singleCardBody}>
-                                        <h1>- Title - <br />{singleCard.singleCard.title}</h1>
-                                        <h2>- Description - <br />{singleCard.singleCard.description}</h2>
-                                        <p><small>- Date - {singleCard.singleCard.date}</small></p>
-                                        <small>- Created At - {singleCard.singleCard.created_at}</small>
-                                        <div className={styles.singleCardBtns}>
-                                            <button
-                                                onClick={deleteSingleCard}>
-                                                <FontAwesomeIcon icon={faTrashAlt} />
-                                            </button>
-                                            <button
-                                                onClick={toggleEditModal}>
-                                                <FontAwesomeIcon icon={faAddressCard} />
-                                            </button>
 
-                                        </div>
+        <>
+            {
+
+                !singleCard ? (loading && <Spinner />) :
+                    (
+                        <>
+                            <div className={styles.singleCardHolder}>
+                                <div className={styles.goBackPage}>
+                                    <Button
+                                        variant='dark'
+                                        style={{ color: '#ddd' }}
+                                        onClick={() => props.history.goBack()}
+                                    >Go Back
+                                        </Button>
+                                </div>
+                                <div className={styles.singleCardBody}>
+                                    <h1>- Title - <br />{singleCard.title}</h1>
+                                    <h2>- Description - <br />{singleCard.description}</h2>
+                                    <p><small>- Date - {singleCard.date.slice(0, 10)}</small></p>
+                                    <small>- Created At - {singleCard.created_at.slice(0, 10)}</small>
+                                    <div className={styles.singleCardBtns}>
+                                        <button
+                                            onClick={deleteSingleCard}>
+                                            <FontAwesomeIcon icon={faTrashAlt} />
+                                        </button>
+                                        <button
+                                            onClick={()=>toggleEditModal(true)}>
+                                            <FontAwesomeIcon icon={faAddressCard} />
+                                        </button>
+
                                     </div>
                                 </div>
-                                {
-                                    editModal.isEditModal && <Modal
-                                        onHide={toggleEditModal}
-                                        onSubmit={handleEditCard}
-                                        editCard={singleCard.singleCard}
-                                    />
-                                }
-                            </>
-                        
-                        )
-                            
-                    }
-                }
-            
-            </contextForSingleCard.Consumer>
-               
-      
+                            </div>
+                            {
+                                isEditModal && <Modal
+                                    onHide={()=>toggleEditModal(false)}
+                                    onSubmit={handleEditCard}
+                                    editCard={singleCard}
+                                />
+                            }
+                        </>
+
+                    )
+
+
+            }
+
+        </>
+
+
+
     )
 
 }

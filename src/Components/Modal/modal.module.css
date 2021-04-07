@@ -150,7 +150,37 @@
   border-radius: 15px;
   outline: none;
 }
-
+.errorModal {
+  position: absolute;
+  top:15%;
+  left:50%;
+  transform: translateX(-50%);
+  width:350px;
+  height:auto;
+  background:black;
+  color:green;
+  font-size: 16px;
+  text-transform: lowercase;
+}
+.errorModal h2 {
+  color:green;
+  font-size: 13px;
+  text-transform: lowercase;
+}
+.errorModal button {
+  color:green;
+  border:1px solid green;
+  background: transparent;
+  font-size: 13px;
+  text-transform: lowercase;
+}
+.errorModal button:hover {
+  color:rgb(5, 85, 5);
+  border:1px solid green;
+  background: transparent;
+  font-size: 13px;
+  text-transform: lowercase;
+}
 @media screen and (min-width:320px) and (max-width:768px) {
     
   .modalHolder{

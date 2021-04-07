@@ -3,10 +3,11 @@ import styles from '../contact.module.css'
 import { Form, Button } from 'react-bootstrap';
 import { useReducer } from 'react';
 import Spinner from '../../../Spinner/Spinner';
-import ContactFormModal from './ContactFormModal'
+import ContactFormModal from './ContactFormModal';
 import { isRequired, maxLength, minLength, validateEmail } from '../../../helpers/validators';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle, faCheckCircle, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import ErrorModal from '../../../Modal/ErrorModal';
 const forms = [
     {
         name: 'name',
@@ -50,6 +51,8 @@ const initialState = {
     },
     loading: false,
     errorMessage: '',
+    errorStatus:'',
+    toggleErrorModal:false,
     isOpen:false
 }
 const reducer = (state = initialState, action) => {
@@ -103,10 +106,22 @@ const reducer = (state = initialState, action) => {
                 errorMessage:action.error
             }
         }
+        case 'SET_ERROR_STATUS' : {
+            return {
+                ...state,
+                errorStatus:action.error
+            }
+        }
         case 'OPEN_MODAL' : {
             return {
                 ...state,
                 isOpen:!state.isOpen
+            }
+        }
+        case 'OPEN_ERROR_MODAL' : {
+            return {
+                ...state,
+                toggleErrorModal:!state.toggleErrorModal
             }
         }
         default: return state
@@ -151,18 +166,20 @@ const ContactWithReducer = () => {
                 })
                 .catch(error => {
                     dispatch({type:'REMOVE_LOADING'})
-                    const action = {
-                        type:'SET_ERROR_MESSAGE',
-                        error:error.message
-                    }
-                    dispatch(action)
+                    
+                    dispatch({type:'SET_ERROR_MESSAGE',error:error.message})
+                    dispatch({type:'SET_ERROR_STATUS',error:error.status})
+                    dispatch({type:'OPEN_ERROR_MODAL'})
                 })
                 
     }
     const toggleOpenModal = () => {
         dispatch({type:'OPEN_MODAL'})
     }
-    const { formData, loading ,isOpen} = state;
+    const toggleOpenErrorModal = () => {
+        dispatch({type:'OPEN_ERROR_MODAL'})
+    }
+    const { formData, loading ,isOpen,errorStatus} = state;
     const formGroup = forms.map((form, index) => {
         
         const inputValue = formData[form.name].value
@@ -219,6 +236,7 @@ const ContactWithReducer = () => {
                     className={styles.formReducerBody}
                 >
                     <h2>Send Your Message</h2>
+                   
                     <small
                         style={{ textTransform: 'capitalize', color: 'red' }}>
                         {state.errorMessage}
@@ -228,7 +246,7 @@ const ContactWithReducer = () => {
                         className={styles.formGroupBtn}
                         type="submit"
                         onClick={handleSubmit}
-                    // disabled={!values.name.valid || !values.email.valid || !values.message.valid} 
+                        disabled={!formData.name.valid || !formData.email.valid || !formData.message.valid} 
                     >
                         Send
                         </Button>
@@ -238,7 +256,7 @@ const ContactWithReducer = () => {
                  !!isOpen && 
                  <ContactFormModal 
                     onHide={toggleOpenModal}
-                    name={formData.name.value}
+                    name={state.formData.name.value}
                     email={formData.email.value}
                     message={formData.message.value}
                 />
@@ -246,7 +264,14 @@ const ContactWithReducer = () => {
             {
                 !!loading && <Spinner />
             }
-
+            { 
+                !!state.toggleErrorModal && 
+                <ErrorModal 
+                errorMessage={state.errorMessage}
+                errorStatus={errorStatus}
+                onHide={toggleOpenErrorModal}
+                />     
+            }  
 
         </div>
     )

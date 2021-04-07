@@ -5,18 +5,18 @@ import ToDo from './Components/pages/Todo/ToDo';
 import About from './Components/pages/About/About';
 import ContactWithClass from './Components/pages/Contact/Contacts/ContactWithClass';
 import ContactWithHook from './Components/pages/Contact/Contacts/ContactWithHook';
+import ContactWithReducer from './Components/pages/Contact/Contacts/ContactWithReducer'
 import ContactPage from './Components/pages/Contact/ContactPage'
 import Contact from './Components/pages/Contact/Contact'
 import NotFound from './Components/pages/NotFound/NotFound';
 import SingleCard from './Components/pages/SingleCard/SingleCard';
+import SingleCardWithReducer from './Components/pages/SingleCard/SingleCardWithReducer'
 //
 import SinglePageProvider from './Context/providers/SinglePageProvider'
 //
 import { Route, Switch, Redirect } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-
-
 
 const router = [
   {
@@ -61,6 +61,16 @@ const router = [
     path: '/card/:id',
     exact: true
   },
+  {
+    component: SingleCardWithReducer,
+    path: '/single-card/:id',
+    exact: true
+  },
+  {
+    component: ContactWithReducer,
+    path: '/contact-reducer',
+    exact: true
+  },
 
 ];
 class App extends React.Component {
@@ -81,7 +91,6 @@ class App extends React.Component {
             key={index}
             path={item.path}
             render={(props) => (
-
               <SinglePageProvider {...props}>
                 <item.component {...props} />
               </SinglePageProvider>

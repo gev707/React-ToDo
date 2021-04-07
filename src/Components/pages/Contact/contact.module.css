@@ -8,15 +8,23 @@
     width:100vw;
     height:100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.contactMainPage h2:hover{
+.linkTitles:hover{
     transition:all 0.5s ease;
-    background: #0003;
+    background: #0003;  
 }
-.contactMainPage h2 a{
-   text-decoration: none;
+.linkTitles:hover .linkA{
+    color:#fff
+}
+.linkTitles{
+    width: 400px;
+    text-align: start;
+}
+.linkA {
+    color:#ddd
 }
 .formWrapper{
     width: 100%;
@@ -63,6 +71,20 @@
     -webkit-box-reflect:below 2px linear-gradient(transparent,transparent,#0004);
 }
 .formHookBody:hover {
+    box-shadow: 5px -4px 10px rgb(255 255 255 /12%);
+    transform:perspective(600px) rotateY(0deg);
+    -webkit-box-reflect:below 2px linear-gradient(transparent,transparent,#0004);
+}
+.formReducerBody{
+    width:500px;
+    height:auto;
+    background: rgb(121 148 148);
+    box-shadow: 5px -4px 5px rgb(0 0 0 /10%);
+    transform:perspective(600px) rotateY(-10deg);
+    -webkit-box-reflect:below 2px  linear-gradient(transparent,transparent,#0005);
+    transition: 0.5s ease;
+}
+.formReducerBody:hover{
     box-shadow: 5px -4px 10px rgb(255 255 255 /12%);
     transform:perspective(600px) rotateY(0deg);
     -webkit-box-reflect:below 2px linear-gradient(transparent,transparent,#0004);
@@ -161,11 +183,13 @@
 }
 @media screen and (min-width:300px) and (max-width:767px) {
     .contactMainPage {
-      
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    }
+    .linkTitles{
+        width: 100%;
     }
     .title {
         position: absolute;

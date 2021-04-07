@@ -1,43 +1,49 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import styles from './contact.module.css'
-const Contact =()=>{
+const linkTitle = [
+    {
+        linkName: 'Contact Form With Local State ',
+        to: '/contactformclass',
+        name: '/ContactWithClass',
+    },
+    {
+        linkName: 'Contact Form With Use State',
+        to: '/contactformhook',
+        name: '/ContactWithHook'
+    },
+    {
+        linkName: 'Contact Form With Use Context',
+        to: '/contactpage',
+        name: '/ContactPage'
+    },
+    {
+        linkName: 'Contact Form With Use Reducer',
+        to: '/contact-reducer',
+        name: '/ContactWithReducer'
+    }
+]
+const Contact = () => {
+    const links = linkTitle.map((link, index) => {
+        return (
+            <h2 className={styles.linkTitles} key={index}>
+                <Link
+                    to={link.to}
+                    name={link.name}
+                    className={styles.linkA}
+                >{link.linkName}
+                </Link>
+            </h2>
+        )
+    })
     return (
         <>
-        <h1 className={styles.title}>Contact Section</h1>
-        <div className={styles.contactMainPage}>
-       
-   
-            <h2>
-                <Link 
-                    to='/contactformclass'
-                    name='/ContactWithClass'
-                    style={{color:'#ddd'}}
-                    >Contact Form With Class 
-                </Link>
-            </h2>
-            <h2>
-                <Link 
-                    to='/contactformhook'
-                    name='/ContactWithHook'
-                    style={{color:'#ddd'}}
-                    >Contact Form With Hook
-                </Link>
-            </h2>
-            <h2>
-                <Link 
-                    to='/contactpage'
-                    name='/ContactPage'
-                    style={{color:'#ddd'}}
-                    >Contact Form With Context
-                </Link>
-            </h2>
-            
-           
-            
-        </div>
-         </>
-        
+            <h1 className={styles.title}>Contact Section</h1>
+            <div className={styles.contactMainPage}>
+                {links}
+            </div>
+        </>
+
     )
 }
 export default Contact

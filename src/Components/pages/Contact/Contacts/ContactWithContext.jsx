@@ -1,10 +1,8 @@
 
 import styles from '../contact.module.css'
 import { Form, Button } from 'react-bootstrap';
-
 import { useContext } from 'react';
 import { contextForContact } from '../../../../Context/context';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle, faCheckCircle, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import Spinner from '../../../Spinner/Spinner';
@@ -31,7 +29,8 @@ const forms = [
 ];
 const ContactWithContext = () => {
     const context = useContext(contextForContact)
-    const { values,
+    const { 
+        values,
         handleSubmit,
         handleChange,
         toggleOpenContactModal,

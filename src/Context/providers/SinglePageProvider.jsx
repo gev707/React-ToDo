@@ -10,11 +10,13 @@ const SinglePageProvider = props => {
     
     const getSingleCard = useCallback(() => {
         const { id } = props.match.params;
+        setLoading(true);
         fetch(`${API_HOST}/task/${id}`)
             .then(res => res.json())
             .then(data => {
                 if (data.error) throw data.error
                 setSingleCard(data)
+                setLoading(false)
             })
             .catch(error => {
                 props.history.push({ pathname: '/404', state: 'isCardId' });
